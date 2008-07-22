@@ -1,0 +1,58 @@
+To compile the Grep package with DJGPP tools, you will need the
+following tools:
+
+	  1) The basic DJGPP development environment, including the
+             GCC compiler and the libraries.
+
+	  2) GNU Make revision 3.75 or later.
+
+	  3) GNU Sed.
+
+Running the tests ("make check" in the top-level directory)
+additionally requires Bash, `cmp' (from GNU Diffutils) and `true'
+(from GNU Sh-utils).  Automated installation ("make install") requires
+Groff and `ginstall' (from GNU Fileuitils).  The various ``clean''
+targets ("make clean", "make distclean", etc.) need `rm' (from
+Fileutils) and `test' (from Sh-utils).  TAGS and ID targets require
+`etags' (from the Emacs distribution) and `mkid' (from ID-utils).
+
+All of these tools are available from the DJGPP archive sites.
+
+To build Grep, run the djgpp\config.bat batch file, then run Make:
+
+	  djgpp\config
+	  make
+
+config.bat and the Makefile's it creates depend on certain file names
+which are illegal on MS-DOS to be transformed to alternate names.  If
+you unpack the original FSF source distribution with the DJTAR program
+supplied with DJGPP or with the DJGPP port of GNU Tar, these
+transformations will be done automatically for you.  However, if you
+use some other program to unpack the sources and the build process
+complains about missing files, look for the REN commands near the end
+of djgpp\config.bat and manually rename the files mentioned there to
+the names which the Makefile's expect.
+
+Please note the -u and -U options that specifically target MS-DOS and
+MS-Windows environments.  They are described in the Grep man page in
+this distribution.
+
+To test that the package works, say "make check".  If you don't have a
+file named sh.exe somwhere on your PATH, "make check" will refuse to
+run, as it needs a Unix-like shell.
+
+To install, either copy the executables and man pages to the
+appropriate directories, or say "make install".  To clean up, say
+"make clean" or "make distclean".  Both these targets also require
+Bash; they might also run with 4DOS or NDOS replacement shells, but I
+didn't test that.
+
+National Language Support doesn't work in this port, so don't expect
+the programs to talk to you in any language but English.
+
+Please post any problems in the DOS version to the comp.os.msdos.djgpp
+news group first, especially if they have something to do with the
+DOS-specific aspects.
+
+Enjoy,
+				Eli Zaretskii <eliz@is.elta.co.il>

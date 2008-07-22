@@ -1,0 +1,459 @@
+# Mensajes en español para GNU grep.
+# Copyright (C) 1996, 1997 Free Software Foundation, Inc.
+# Enrique Melero Gómez <melero@iprolink.ch>, 1996.
+# Santiago Vila Doncel <sanvila@unex.es>, 1997.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GNU grep 2.1\n"
+"POT-Creation-Date: 1998-04-26 19:31-0400\n"
+"PO-Revision-Date: 1997-11-30 13:14+0100\n"
+"Last-Translator: Santiago Vila Doncel <sanvila@unex.es>\n"
+"Language-Team: Spanish <es@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8-bit\n"
+
+#: src/dfa.c:147 src/dfa.c:159 src/dfa.c:172
+msgid "Memory exhausted"
+msgstr "Memoria agotada"
+
+#: src/dfa.c:444
+msgid "Unfinished \\ escape"
+msgstr "Secuencia de escape \\ sin terminar"
+
+#. Cases:
+#. {M} - exact count
+#. {M,} - minimum count, maximum is infinity
+#. {,M} - 0 through M
+#. {M,N} - M through N
+#: src/dfa.c:556 src/dfa.c:562 src/dfa.c:573 src/dfa.c:584
+msgid "unfinished repeat count"
+msgstr "contador de repetición sin terminar"
+
+#: src/dfa.c:569 src/dfa.c:583 src/dfa.c:587
+msgid "malformed repeat count"
+msgstr "contador de repetición erróneo"
+
+#: src/dfa.c:652 src/dfa.c:655 src/dfa.c:682 src/dfa.c:686 src/dfa.c:687
+#: src/dfa.c:690 src/dfa.c:703 src/dfa.c:704
+msgid "Unbalanced ["
+msgstr "[ desemparejado"
+
+#: src/dfa.c:841
+msgid "Unbalanced ("
+msgstr "( desemparejado"
+
+#: src/dfa.c:962
+msgid "No syntax specified"
+msgstr "No se ha especificado ninguna sintaxis"
+
+#: src/dfa.c:970
+msgid "Unbalanced )"
+msgstr ") desemparejado"
+
+# FIXME. Comunicar al autor que esto es repetición...
+#: src/dfa.c:1990
+msgid "out of memory"
+msgstr "memoria agotada"
+
+#: src/getopt.c:628
+#, c-format
+msgid "%s: option `%s' is ambiguous\n"
+msgstr "%s: la opción `%s' es ambigua\n"
+
+#: src/getopt.c:652
+#, c-format
+msgid "%s: option `--%s' doesn't allow an argument\n"
+msgstr "%s: la opción `--%s' no admite ningún argumento\n"
+
+#: src/getopt.c:657
+#, c-format
+msgid "%s: option `%c%s' doesn't allow an argument\n"
+msgstr "%s: la opción `%c%s' no admite ningún argumento\n"
+
+#: src/getopt.c:674 src/getopt.c:847
+#, c-format
+msgid "%s: option `%s' requires an argument\n"
+msgstr "%s: la opción `%s' requiere un argumento\n"
+
+#. --option
+#: src/getopt.c:703
+#, c-format
+msgid "%s: unrecognized option `--%s'\n"
+msgstr "%s: opción no reconocida `--%s'\n"
+
+#. +option or -option
+#: src/getopt.c:707
+#, c-format
+msgid "%s: unrecognized option `%c%s'\n"
+msgstr "%s: opción no reconocida `%c%s'\n"
+
+#. 1003.2 specifies the format of this message.
+#: src/getopt.c:733
+#, c-format
+msgid "%s: illegal option -- %c\n"
+msgstr "%s: opción ilegal -- %c\n"
+
+#: src/getopt.c:736
+#, c-format
+msgid "%s: invalid option -- %c\n"
+msgstr "%s: opción inválida -- %c\n"
+
+#. 1003.2 specifies the format of this message.
+#: src/getopt.c:766 src/getopt.c:896
+#, c-format
+msgid "%s: option requires an argument -- %c\n"
+msgstr "%s: la opción requiere un argumento -- %c\n"
+
+#: src/getopt.c:813
+#, c-format
+msgid "%s: option `-W %s' is ambiguous\n"
+msgstr "%s: la opción `-W %s' es ambigua\n"
+
+#: src/getopt.c:831
+#, c-format
+msgid "%s: option `-W %s' doesn't allow an argument\n"
+msgstr "%s: la opción `-W %s' no admite ningún argumento\n"
+
+#: src/getopt1.c:132
+#, c-format
+msgid "option %s"
+msgstr "opción %s"
+
+#: src/getopt1.c:134
+#, c-format
+msgid " with arg %s"
+msgstr " con argumento %s"
+
+#: src/getopt1.c:149
+msgid "digits occur in two different argv-elements.\n"
+msgstr "aparecen dígitos en dos elementos de argv diferentes.\n"
+
+#: src/getopt1.c:151
+#, c-format
+msgid "option %c\n"
+msgstr "opción %c\n"
+
+#: src/getopt1.c:155
+msgid "option a\n"
+msgstr "opción a\n"
+
+#: src/getopt1.c:159
+msgid "option b\n"
+msgstr "opción b\n"
+
+#: src/getopt1.c:163
+#, c-format
+msgid "option c with value `%s'\n"
+msgstr "la opción c tiene el valor `%s'\n"
+
+#: src/getopt1.c:167
+#, c-format
+msgid "option d with value `%s'\n"
+msgstr "la opción d tiene el valor `%s'\n"
+
+#: src/getopt1.c:174
+#, c-format
+msgid "?? getopt returned character code 0%o ??\n"
+msgstr "?? getopt ha devuelto el carácter código 0%o ??\n"
+
+#: src/getopt1.c:180
+msgid "non-option ARGV-elements: "
+msgstr "elementos de ARGV que no son opciones: "
+
+#: src/grep.c:144 src/grep.c:161 src/grep.c:222 src/grep.c:263 src/kwset.c:184
+#: src/kwset.c:190
+msgid "memory exhausted"
+msgstr "memoria agotada"
+
+#: src/grep.c:293
+#, c-format
+msgid "%s: warning: %s: %s\n"
+msgstr "%s: atención: %s: %s\n"
+
+#: src/grep.c:392 src/grep.c:1034
+msgid "writing output"
+msgstr "escribiendo el resultado"
+
+#: src/grep.c:597
+#, c-format
+msgid "Usage: %s [OPTION]... PATTERN [FILE]...\n"
+msgstr "Modo de empleo: %s [OPCIÓN]... PATRÓN [FICHERO]...\n"
+
+#: src/grep.c:598
+#, c-format
+msgid "Try `%s --help' for more information.\n"
+msgstr "Pruebe `%s --help' para más información.\n"
+
+# FIXME: Dice [FILE] ... en vez de [FILE]... ¿Será un error?
+#: src/grep.c:602
+#, c-format
+msgid "Usage: %s [OPTION]... PATTERN [FILE] ...\n"
+msgstr "Modo de empleo: %s [OPCIÓN]... PATRÓN [FICHERO] ...\n"
+
+#: src/grep.c:603
+msgid ""
+"Search for PATTERN in each FILE or standard input.\n"
+"\n"
+"Regexp selection and interpretation:\n"
+"  -E, --extended-regexp     PATTERN is an extended regular expression\n"
+"  -F, --fixed-regexp        PATTERN is a fixed string separated by newlines\n"
+"  -G, --basic-regexp        PATTERN is a basic regular expression\n"
+"  -e, --regexp=PATTERN      use PATTERN as a regular expression\n"
+"  -f, --file=FILE           obtain PATTERN from FILE\n"
+"  -i, --ignore-case         ignore case distinctions\n"
+"  -w, --word-regexp         force PATTERN to match only whole words\n"
+"  -x, --line-regexp         force PATTERN to match only whole lines\n"
+msgstr ""
+
+#: src/grep.c:615
+msgid ""
+"\n"
+"Miscellaneous:\n"
+"  -s, --no-messages         suppress error messages\n"
+"  -v, --revert-match        select non-matching lines\n"
+"  -V, --version             print version information and exit\n"
+"      --help                display this help and exit\n"
+msgstr ""
+
+#: src/grep.c:622
+msgid ""
+"\n"
+"Output control:\n"
+"  -b, --byte-offset         print the byte offset with output lines\n"
+"  -n, --line-number         print line number with output lines\n"
+"  -H, --with-filename       print the filename for each match\n"
+"  -h, --no-filename         suppress the prefixing filename on output\n"
+"  -q, --quiet, --silent     suppress all normal output\n"
+"  -L, --files-without-match only print FILE names containing no match\n"
+"  -l, --files-with-matches  only print FILE names containing matches\n"
+"  -c, --count               only print a count of matching lines per FILE\n"
+msgstr ""
+
+#: src/grep.c:633
+msgid ""
+"\n"
+"Context control:\n"
+"  -B, --before-context=NUM  print NUM lines of leading context\n"
+"  -A, --after-context=NUM   print NUM lines of trailing context\n"
+"  -NUM                      same as both -B NUM and -A NUM\n"
+"  -C, --context             same as -2\n"
+"  -U, --binary              do not strip CR characters at EOL (MSDOS)\n"
+"  -u, --unix-byte-offsets   report offsets as if CRs were not there (MSDOS)\n"
+"\n"
+"If no -[GEF], then `egrep' assumes -E, `fgrep' -F, else -G.\n"
+"With no FILE, or when FILE is -, read standard input. If less than\n"
+"two FILEs given, assume -h. Exit with 0 if matches, with 1 if none.\n"
+"Exit with 2 if syntax errors or system errors.\n"
+msgstr ""
+
+#: src/grep.c:647
+#, fuzzy
+msgid ""
+"\n"
+"Report bugs to <bug-gnu-utils@gnu.org>.\n"
+msgstr "Comunicar `bugs' a <bug-gnu-utils@prep.ai.mit.edu>.\n"
+
+#: src/grep.c:785 src/grep.c:792
+msgid "invalid context length argument"
+msgstr ""
+
+#: src/grep.c:800 src/grep.c:805 src/grep.c:810
+msgid "you may specify only one of -E, -F, or -G"
+msgstr "sólo se puede especificar una de las opciones -E, -F, o -G"
+
+#  viendo los fuentes , hay varias opciones
+#  que hay sin documentar. O quizá es que getopt() lo he entendido mal
+#  Son las opciones X ( requiere argumento ) , switchs  -c, -b, -L e -y
+#  grep.c:622 ->
+#  opt = getopt(argc, argv, "0123456789A:B:CEFGVX:bce:f:hiLlnqsvwxy"
+#  grep --help ->
+#  usage: grep [-[[AB] ]<num>] [-[CEFGVchilnqsvwx]] [-[ef]] <expr> [<files...>]
+#  La opción -X es a la que corresponde esta línea.
+#
+# No me gusta nada lo de opción "a buscar".
+# Se admiten sugerencias. sv
+#: src/grep.c:829
+msgid "matcher already specified"
+msgstr "la expresión a buscar ya fue especificada"
+
+#: src/grep.c:915
+#, c-format
+msgid "grep (GNU grep) %s\n"
+msgstr "grep (GNU grep) %s\n"
+
+#: src/grep.c:917
+msgid ""
+"Copyright (C) 1988, 92, 93, 94, 95, 96, 97 Free Software Foundation, Inc.\n"
+msgstr ""
+"Copyright (C) 1988, 92, 93, 94, 95, 96, 97 Free Software Foundation, Inc.\n"
+
+#: src/grep.c:919
+msgid ""
+"This is free software; see the source for copying conditions. There is NO\n"
+"warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+msgstr ""
+"Esto es software libre; vea el código fuente para las condiciones de copia.\n"
+"No hay NINGUNA garantía; ni siquiera de COMERCIABILIDAD o IDONEIDAD PARA UN\n"
+"FIN DETERMINADO.\n"
+
+#: src/grep.c:964 src/grep.c:1015
+msgid "(standard input)"
+msgstr "(entrada estándar)"
+
+#: src/grep.c:1027 src/grep.c:1030
+msgid "(standard input)\n"
+msgstr "(salida estándar)\n"
+
+#: src/obstack.c:467
+msgid "memory exhausted\n"
+msgstr "memoria agotada\n"
+
+#~ msgid "Regexp selection and interpretation:\n"
+#~ msgstr "Selección e interpretación de Expreg:\n"
+
+#~ msgid ""
+#~ "  -E, --extended-regexp     PATTERN is an extended regular expression\n"
+#~ msgstr ""
+#~ "  -E, --extended-regexp     PATRÓN es una expresión regular extendida\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "  -F, --fixed-regexp        PATTERN is a fixed string separated by newlines\n"
+#~ msgstr ""
+#~ "  -F, --fixed-strings       PATRÓN es una cadena fija separada por\n"
+#~ "                            caracteres de nueva línea\n"
+
+#~ msgid "  -G, --basic-regexp        PATTERN is a basic regular expression\n"
+#~ msgstr ""
+#~ "  -G, --basic-regexp        PATRÓN es una expresión regular básica\n"
+
+#~ msgid "  -e, --regexp=PATTERN      use PATTERN as a regular expression\n"
+#~ msgstr "  -e, --regexp=PATRÓN       utiliza PATRÓN como expresión regular\n"
+
+# FIXME: El original está mal.
+#, fuzzy
+#~ msgid "  -f, --file=FILE           obtain PATTERN from FILE\n"
+#~ msgstr "  -f, --file=FICHERO        obtiene PATRÓN de FICHERO\n"
+
+#~ msgid "  -i, --ignore-case         ignore case distinctions\n"
+#~ msgstr ""
+#~ "  -i, --ignore-case         considera iguales mayúsculas y minúsculas\n"
+
+#~ msgid ""
+#~ "  -w, --word-regexp         force PATTERN to match only whole words\n"
+#~ msgstr ""
+#~ "  -w, --word-regexp         obliga a que PATRÓN coincida solamente\n"
+#~ "                            con palabras completas\n"
+
+#~ msgid ""
+#~ "  -x, --line-regexp         force PATTERN to match only whole lines\n"
+#~ msgstr ""
+#~ "  -x, --line-regexp         obliga a que PATRÓN coincida solamente\n"
+#~ "                            con líneas completas\n"
+
+#~ msgid "Miscellaneous:\n"
+#~ msgstr "Variadas:\n"
+
+#~ msgid "  -s, --no-messages         suppress error messages\n"
+#~ msgstr "  -s, --no-messages         suprime los mensajes de error\n"
+
+#~ msgid "  -v, --revert-match        select non-matching lines\n"
+#~ msgstr "  -v, --revert-match        selecciona las líneas no coincidentes\n"
+
+#~ msgid "  -V, --version             print version information and exit\n"
+#~ msgstr "  -V, --version             muestra la versión y finaliza\n"
+
+#~ msgid "      --help                display this help and exit\n"
+#~ msgstr "      --help                muestra esta ayuda y finaliza\n"
+
+#~ msgid "Output control:\n"
+#~ msgstr "Control del resultado:\n"
+
+#~ msgid ""
+#~ "  -b, --byte-offset         print the byte offset with output lines\n"
+#~ msgstr ""
+#~ "  -b, --byte-offset         muestra el desplazamiento en bytes junto\n"
+#~ "                            con las líneas de salida\n"
+
+#~ msgid "  -n, --line-number         print line number with output lines\n"
+#~ msgstr ""
+#~ "  -n, --line-number         muestra el número de línea junto con\n"
+#~ "                            las líneas de salida\n"
+
+#~ msgid "  -H, --with-filename       print the filename for each match\n"
+#~ msgstr ""
+#~ "  -H, --with-filename       muestra el nombre del fichero para cada\n"
+#~ "                            coincidencia\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "  -h, --no-filename         suppress the prefixing filename on output\n"
+#~ msgstr ""
+#~ "  -h, --no-filename         suprime los nombres de los ficheros en\n"
+#~ "                            el resultado\n"
+
+#~ msgid "  -q, --quiet, --silent     suppress all normal output\n"
+#~ msgstr "  -q, --quiet, --silent     suprime todo el resultado normal\n"
+
+#~ msgid ""
+#~ "  -L, --files-without-match only print FILE names containing no match\n"
+#~ msgstr ""
+#~ "  -L, --files-without-match muestra solamente los nombres de FICHEROs\n"
+#~ "                            que no contienen ninguna coincidencia\n"
+
+#~ msgid ""
+#~ "  -l, --files-with-matches  only print FILE names containing matches\n"
+#~ msgstr ""
+#~ "  -l, --files-with-matches  muestra solamente los nombres de FICHEROs\n"
+#~ "                            que contienen alguna coincidencia\n"
+
+#~ msgid ""
+#~ "  -c, --count               only print a count of matching lines per FILE\n"
+#~ msgstr ""
+#~ "  -c, --count               muestra solamente el total de líneas que "
+#~ "coinciden\n"
+#~ "                            por cada FICHERO\n"
+
+#~ msgid "Context control:\n"
+#~ msgstr "Control del contexto:\n"
+
+#~ msgid "  -B, --before-context=NUM  print NUM lines of leading context\n"
+#~ msgstr ""
+#~ "  -B, --before-context=NÚM  muestra NÚM líneas de contexto anterior\n"
+
+#~ msgid "  -A, --after-context=NUM   print NUM lines of trailing context\n"
+#~ msgstr ""
+#~ "  -A, --after-context=NÚM   muestra NÚM líneas de contexto posterior\n"
+
+#~ msgid "  -NUM                      same as both -B NUM and -A NUM\n"
+#~ msgstr ""
+#~ "  -NÚM                      lo mismo que -B NÚM y -A NÚM al mismo tiempo\n"
+
+#~ msgid "  -C, --context             same as -2\n"
+#~ msgstr "  -C, --context             lo mismo que -2\n"
+
+#~ msgid "  -U, --binary              do not strip CR characters at EOL\n"
+#~ msgstr ""
+#~ "  -U, --binary              no elimina los caracteres CR finales de línea\n"
+
+#~ msgid ""
+#~ "  -u, --unix-byte-offsets   report offsets as if CRs were not there\n"
+#~ msgstr ""
+#~ "  -u, --unix-byte-offsets   cuenta los desplazamientos como si no hubiera\n"
+#~ "retornos de carro\n"
+
+# Prefiero dejarlo en solamente un patrón
+# Pero entonces no queda claro que *debe haber uno*, y parece que
+# es uno como máximo (siendo el mínimo 0). sv
+#~ msgid ""
+#~ "There should be one and only one PATTERN, `-e PATTERN' or `-f FILE'.\n"
+#~ msgstr "Debe haber un y solamente un PATRÓN, `-e PATRÓN', o `-f FICHERO'.\n"
+
+# No es muy claro el original que digamos... sv
+#~ msgid "If call as `egrep', this implies -E and `fgrep' for -F.\n"
+#~ msgstr "Si se llama como `egrep', esto implica -E y `fgrep' para -F.\n"
+
+#~ msgid "If no -[GEF], then -G is assumed.\n"
+#~ msgstr "Si no se especifica ninguna de las opciones -[GEF], se supone -G.\n"

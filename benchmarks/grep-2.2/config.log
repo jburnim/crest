@@ -1,0 +1,80 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:566: checking for a BSD compatible install
+configure:619: checking whether build environment is sane
+configure:676: checking whether make sets ${MAKE}
+configure:722: checking for working aclocal
+configure:735: checking for working autoconf
+configure:748: checking for working automake
+configure:761: checking for working autoheader
+configure:774: checking for working makeinfo
+configure:796: checking for mawk
+configure:827: checking for gcc
+configure:904: checking whether the C compiler (gcc  ) works
+configure:918: gcc -o conftest    conftest.c  1>&5
+configure:938: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:943: checking whether we are using GNU C
+configure:967: checking whether gcc accepts -g
+configure:1005: checking for a BSD compatible install
+configure:1057: checking for ranlib
+configure:1088: checking whether large file support needs explicit enabling
+configure:1119: checking how to run the C preprocessor
+configure:1180: checking for ANSI C header files
+configure:1284: checking for size_t
+configure:1317: checking for working const
+configure:1393: checking for ANSI C header files
+configure:1500: checking for string.h
+configure:1500: checking for stdlib.h
+configure:1500: checking for sys/param.h
+configure:1500: checking for memory.h
+configure:1500: checking for unistd.h
+configure:1500: checking for libintl.h
+configure:1540: checking for wctype.h
+configure:1540: checking for wchar.h
+configure:1578: checking whether stat file-mode macros are broken
+configure:1637: checking for working alloca.h
+configure:1670: checking for alloca
+configure:1867: checking for unistd.h
+configure:1906: checking for getpagesize
+configure:1959: checking for working mmap
+configure:2132: checking for strerror
+configure:2132: checking for valloc
+configure:2132: checking for isascii
+configure:2187: checking for memchr
+configure:2242: checking for wctype in -lw
+configure:2285: checking for btowc
+configure:2343: checking for POSIXized ISC
+configure:2364: checking for inline
+configure:2404: checking for off_t
+configure:2442: checking for argz.h
+configure:2442: checking for limits.h
+configure:2442: checking for locale.h
+configure:2442: checking for nl_types.h
+configure:2442: checking for malloc.h
+configure:2442: checking for string.h
+configure:2442: checking for unistd.h
+configure:2442: checking for values.h
+configure:2442: checking for sys/param.h
+configure:2482: checking for getcwd
+configure:2482: checking for munmap
+configure:2482: checking for putenv
+configure:2482: checking for setenv
+configure:2482: checking for setlocale
+configure:2482: checking for strchr
+configure:2482: checking for strcasecmp
+configure:2482: checking for __argz_count
+configure:2482: checking for __argz_stringify
+configure:2482: checking for __argz_next
+configure:2601: checking for LC_MESSAGES
+configure:2634: checking whether NLS is requested
+configure:2654: checking whether included gettext is requested
+configure:2673: checking for libintl.h
+configure:2700: checking for gettext in libc
+configure:2728: checking for bindtextdomain in -lintl
+configure:2763: checking for gettext in libintl
+configure:2987: checking whether catgets can be used
+configure:3251: checking for msgfmt
+configure:3285: checking for gmsgfmt
+configure:3317: checking for xgettext
+configure:3407: checking for catalogs to be installed
