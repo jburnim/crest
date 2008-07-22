@@ -1,0 +1,13 @@
+#!/bin/bash
+
+DIR=`dirname $0`/..
+CILLY=${DIR}/cil/bin/cilly
+
+TARGET=`expr $1 : '\(.*\)\.c'`
+
+rm -f idcount stmtcount funcount cfg_func_map cfg branches cfg_branches
+
+${CILLY} $1 -o ${TARGET} --save-temps --doCrestInstrument \
+    -I${DIR}/include -L${DIR}/lib -lcrest -lstdc++
+
+${DIR}/bin/process_cfg
