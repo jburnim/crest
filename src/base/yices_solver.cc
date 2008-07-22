@@ -12,6 +12,7 @@
 #include <queue>
 #include <set>
 #include <stdio.h>
+#include <stdlib.h>
 #include <utility>
 #include <yices_c.h>
 

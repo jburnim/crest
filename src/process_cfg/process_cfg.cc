@@ -12,6 +12,7 @@
 #include <assert.h>
 #include <ctype.h>
 #include <fstream>
+#include <limits>
 #include <set>
 #include <sstream>
 #include <string>
