@@ -405,7 +405,8 @@ object (self)
             DoChildren
 
       | Return (Some e, _) ->
-          self#queueInstr (instrumentExpr e) ;
+          if isSymbolicType (typeOf e) then
+            self#queueInstr (instrumentExpr e) ;
           self#queueInstr [mkReturn ()] ;
           SkipChildren
 
