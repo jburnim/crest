@@ -15,7 +15,17 @@
 #include "run_crest/concolic_search.h"
 
 int main(int argc, char* argv[]) {
-  assert(argc >= 4);
+  if (argc < 4) {
+    fprintf(stderr,
+            "Syntax: run_crest <program> "
+            "<number of iterations> "
+            "-<strategy> [strategy options]\n");
+    fprintf(stderr,
+            "  Strategies include: "
+            "dfs, cfg, random, uniform_random, random_input \n");
+    return 1;
+  }
+
   string prog = argv[1];
   int num_iters = atoi(argv[2]);
   string search_type = argv[3];
@@ -56,6 +66,7 @@ int main(int argc, char* argv[]) {
     }
   } else {
     fprintf(stderr, "Unknown search strategy: %s\n", search_type.c_str());
+    return 1;
   }
 
   strategy->Run();
