@@ -1,0 +1,15 @@
+Tests for not doing smart indenting when it isn't set.
+
+STARTTEST
+:set nocin nosi ai
+/some
+2cc#test
+:?start?,$w! test.out
+:qa!
+ENDTEST
+
+start text
+		some test text
+		test text
+test text
+		test text

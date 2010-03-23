@@ -1,0 +1,33 @@
+Begin3
+Title:          Exuberant Ctags
+Version:        3.5.1
+Entered-date:   23APR00
+Description:    A better ctags with support for C, C++, Eiffel, Fortran and
+                Java. It is capable of generating tags for all of the
+                following language constructs:
+		  C/C++:
+		    macros; enumerators; functions; class, enum, struct, and
+		    union names; class, struct, and union members; namespaces;
+		    typedefs; variables (definitions and extern declarations);
+		    function prototypes/declarations;
+		  Eiffel:
+		    classes; features; local entities
+		  Fortran
+		    block data; common blocks; entry points; functions;
+		    interfaces; lables; modules; namelists; programs;
+		    subroutines; derived types
+		  Java:
+		    classes; fields; interfaces; methods
+		Ctags can also produce Emacs-style TAGS files. It can also be
+		used to print out a list of selected objects found in source
+		files.
+Keywords:       ctags etags ftags tag tags Exuberant C C++ Eiffel Fortran Java
+		tool utility source index
+Author:         darren@hiebert.com (Darren Hiebert)
+Primary-site:   sunsite.unc.edu /pub/Linux/devel/lang/c
+		139kB ctags-3.5.1.tar.gz
+Original-site:  http://darren.hiebert.com/ctags
+		139kB archives/ctags-3.5.1.tar.gz
+Platforms:      UNIX, MSDOS, Windows 95/NT, OS/2, QNX, Amiga, QDOS, VMS, Cray
+Copying-policy: GNU General Public License
+End

@@ -1,0 +1,29 @@
+/* XPM */
+static char * tb_split_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"18 18 5 1",
+/* colors */
+" 	s None	c None",
+".	c white",
+"X	c black",
+"o	c lightsteelblue",
+"O	c grey50",
+/* pixels */
+"                  ",
+"  .XXXXXXXXXXX    ",
+"  .Xoooooooo.X    ",
+"  .Xoo.ooooo.XO   ",
+"  .Xo..ooooo.XO   ",
+"  .Xoooooooo.XO   ",
+"  .Xoooooooo.XO   ",
+"  .X.........XO   ",
+"  .XXXXXXXXXXXO   ",
+"  .XOOOOOOOO.XO   ",
+"  .Xoo.ooooo.XO   ",
+"  .Xo..ooooo.XO   ",
+"  .Xoooooooo.XO   ",
+"  .Xoooooooo.XO   ",
+"  .X.........XO   ",
+"  .XXXXXXXXXXXO   ",
+"     OOOOOOOOOO   ",
+"                  "};

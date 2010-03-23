@@ -1,0 +1,29 @@
+/* XPM */
+static char *tb_copy_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"    18    18       4           1",
+/* colors */
+"  c None	s mask",
+". c white	s white",
+"n c black	s style",
+"m c grey50	s dark",
+/* pixels */
+
+"                  ",
+"                  ",
+" nnnnnnnnnn       ",
+" n........nm      ",
+" n.nnnnnnnnnnnnn  ",
+" n....n........n  ",
+" n.nnnn.nnnnnn.nm ",
+" n....n........nm ",
+" n.nnnn.nnnnnn.nm ",
+" n....n........nm ",
+" n.nn.n.nnnnnn.nm ",
+" n....n........nm ",
+" nnnnnn.nn.....nm ",
+"  mmmmn........nm ",
+"      nnnnnnnnnnm ",
+"        mmmmmmmmm ",
+"                  ",
+"                  "};

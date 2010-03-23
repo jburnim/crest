@@ -1,0 +1,53 @@
+Test for insert expansion
+
+:se cpt=.,w
+* add-expands (word from next line) from other window
+* add-expands (current buffer first)
+* Local expansion, ends in an empty line (unless it becomes a global expansion)
+* starts Local and switches to global add-expansion
+:se cpt=.,w,i
+* i-add-expands and switches to local
+* add-expands lines (it would end in an empty line if it didn't ignored it self)
+:se cpt=kMakefile
+* checks k-expansion, and file expansion
+:se cpt=w
+* checks make_cyclic in other window
+:se cpt=u nohid
+* checks unloaded buffer expansion
+* checks adding mode abortion
+:se cpt=t,d
+* tag expansion, define add-expansion interrupted
+* t-expansion
+
+STARTTEST
+:se nocp cpt=.,w|$-2,$w!Xtestfile
+nO#include "Xtestfile"
+ru
+O
+
+
+:se cpt=.,w,i
+kOM
+
+:se cpt=kXtestfile
+O
+:se cpt=w
+OST
+:se cpt=u nohid
+oOEN
+unl
+:se cpt=t,d def=^\\k* tags=Xtestfile notagbsearch
+O
+a
+:!rm Xtestfile
+:wq! test.out
+ENDTEST
+
+start of testfile
+run1
+run2
+end of testfile
+
+test11	36Gepeto	/Tag/
+asd	test11file	36G
+Makefile	to	run

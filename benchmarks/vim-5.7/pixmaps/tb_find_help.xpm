@@ -1,0 +1,30 @@
+/* XPM */
+static char * tb_find_help_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"18 18 6 1",
+/* colors */
+" 	c None",
+".	c black",
+"X	c grey50",
+"o	c lightgray",
+"O	c white",
+"+	c lightsteelblue",
+/* pixels */
+"                  ",
+"                  ",
+"    .....X        ",
+"   ..  X..X       ",
+"  ..X   ...       ",
+"  ..X   ....      ",
+"  X..  .oOOo.     ",
+"      .o++Ooo.    ",
+"      .OOOOoO.    ",
+"     ..oOO+oo.    ",
+"     ...oOOo.X    ",
+"        ....X..   ",
+"     ..X     ...  ",
+"     ..X      ..  ",
+"     ..X          ",
+"      XX          ",
+"                  ",
+"                  "};

@@ -1,0 +1,14 @@
+#! /bin/sh
+#
+# Start Vim on a copy of the tutor file.
+
+# Use Vim to copy the tutor, it knows the value of $VIMRUNTIME
+TUTORCOPY=/tmp/tutor$$
+export TUTORCOPY
+vim -u NONE -c 'e $VIMRUNTIME/tutor/tutor' -c 'w! $TUTORCOPY' -c 'q'
+
+# Start vim without any .vimrc, set 'nocompatible'
+vim -u NONE -c "set nocp" $TUTORCOPY
+
+# remove the copy of the tutor
+rm $TUTORCOPY

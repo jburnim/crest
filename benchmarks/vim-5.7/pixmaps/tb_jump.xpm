@@ -1,0 +1,31 @@
+/* XPM */
+static char *tb_jump_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"    18    18        6            1",
+/* colors */
+". c black",
+"a c yellow4",
+"b c grey50",
+"c c gray",
+"d c yellow",
+"e c None",
+/* pixels */
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee",
+"eeeaaaaaaaaaaaaaae",
+"eeabdddddddddddd.b",
+"eabddddddddddddd.b",
+"abdcbcdddddddddd.b",
+"addb.bdddddddddd.b",
+"bddcbcdddddddddd.b",
+"b.dddddddddddddd.b",
+"eb.ddddddddddddd.b",
+"eeb..............b",
+"eeebbbbbbbbbbbbbbb",
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee",
+"eeeeeeeeeeeeeeeeee"
+};

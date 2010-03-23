@@ -1,0 +1,31 @@
+/* XPM */
+static char * tb_save_session_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"18 18 7 1",
+/* colors */
+" 	c None",
+".	c #800000",
+"X	c red",
+"o	c black",
+"O	c white",
+"+	c darkgray",
+"@	c grey50",
+/* pixels */
+"       ....       ",
+"       .XX.       ",
+"       .XX.       ",
+"       .XX.       ",
+"     ...XX...     ",
+"      .XXXX.      ",
+"       .XX.       ",
+"        ..        ",
+"   ooooooooooooo  ",
+"  oOOOOOOOOOO++@o ",
+" oOOOOOOOOOOOO@@o ",
+" oO+++++++++XX@@o ",
+" oO+++++++++++@@o ",
+" oOoooooooooo+@@o@",
+" oOOOOOOOOOOO+@@o@",
+" o+@@@@@@@@@@@@o@ ",
+"  ooooooooooooo@  ",
+"    @@@@@@@@@@@   "};

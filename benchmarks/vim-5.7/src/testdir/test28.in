@@ -1,0 +1,22 @@
+Test for sourcing a file with CTRL-V's at the end of the line
+
+STARTTEST
+:/firstline/+1,/lastline/-1w! testfile
+:so testfile
+Gmm__1__2__3__4__5:'m,$w! test.out
+:!rm -rf testfile
+:qa!
+ENDTEST
+
+firstline
+map __1 afirst
+map __2 asecond
+map __3 athird
+map __4 afourth
+map __5 afifth
+map __1 asd
+map __2 asd
+map __3 asd
+map __4 asd
+map __5 asd
+lastline

@@ -1,0 +1,34 @@
+
+This is a test if a URL is recognized by "gf", with the cursor before and
+after the "://".  Also test ":\\".  Tricky: Have to use backslashes in a file
+name!
+
+STARTTEST
+:.,$w!/tmp/vimtest2a
+/first
+/tmp
+gf
+:.,$w!/tmp/vimtest2b
+/second
+/URL
+gf
+:set isf=@,48-57,/,.,-,_,+,,,$,:,~,\
+:.,$w!\\tmp\\vimtest2c
+/third
+/name
+gf
+:.,$w!\\tmp\\vimtest2d
+/fourth
+G/URL
+gf
+:!rm /tmp/vimtest2a /tmp/vimtest2b \\tmp\\vimtest2c \\tmp\\vimtest2d
+:wq! test.out
+ENDTEST
+This is the text for the vimtest2a file.
+This is the text for the vimtest2b file.
+This is the text for the vimtest2c file.
+This is the text for the vimtest2d file.
+This is a first test for an URL://machine.name/tmp/vimtest2a and some other text
+This is a second test for an URL://machine.name/tmp/vimtest2b and some other text
+This is a third test for an URL:\\machine.name\tmp\vimtest2c and some other text
+This is a fourth test for an URL:\\machine.name\tmp\vimtest2d and some other text

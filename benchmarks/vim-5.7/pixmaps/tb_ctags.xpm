@@ -1,0 +1,32 @@
+/* XPM */
+static char *tb_ctags_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"    18    18        7            1",
+/* colors */
+". c black",
+"a c yellow4",
+"b c grey50",
+"c c gray",
+"d c yellow",
+"e c None",
+"X c white",
+/* pixels */
+"eeeee..e.....eeeee",
+"eeee.XX.XXXXX.eeee",
+"eeee.XXXXXXXXX.eee",
+"eeee.XX.XXXX..X.ee",
+"eeeee..e....be..ee",
+"eeeaaccac...cac.ce",
+"eeabddddd...bddd.b",
+"eabdddddd...bddd.b",
+"abdcbcddd...bddd.b",
+"addb.bddd...bddd.b",
+"bddcbcddd...bddd.b",
+"b.ddddddd...bddd.b",
+"eb.dddddd...bddd.b",
+"eeb.........b....b",
+"eeebbbbbb...bbbbbb",
+"eeeeeeeee...beeeee",
+"eeeeeeeee...beeeee",
+"eeeeeeeeeebbbeeeee"
+};

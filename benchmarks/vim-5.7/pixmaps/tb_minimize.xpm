@@ -1,0 +1,29 @@
+/* XPM */
+static char * tb_minimize_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"18 18 5 1",
+/* colors */
+" 	s None	c None",
+".	c white",
+"X	c black",
+"o	c lightsteelblue",
+"O	c grey50",
+/* pixels */
+"                  ",
+"                  ",
+"                  ",
+"                  ",
+"                  ",
+" .XXXXXXXXXXXXX   ",
+" .Xoooooooooo.X   ",
+" .Xoo.ooooooo.XO  ",
+" .Xoooooooooo.XO  ",
+" .Xooooooooo..XO  ",
+" .X...........XO  ",
+" .XXXXXXXXXXXXXO  ",
+"    OOOOOOOOOOOO  ",
+"                  ",
+"                  ",
+"                  ",
+"                  ",
+"                  "};

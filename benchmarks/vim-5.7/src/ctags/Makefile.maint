@@ -1,0 +1,309 @@
+#*****************************************************************************
+#	$Id: Makefile.maint,v 8.19 2000/04/15 02:58:04 darren Exp $
+#
+#   Development makefile for Exuberant Ctags, used to build releases.
+#
+#	Copyright (c) 1996-1999, Darren Hiebert
+#*****************************************************************************
+
+SOURCES		=	args.c eiffel.c entry.c fortran.c get.c keyword.c \
+				main.c options.c parse.c read.c sort.c strlist.c vstring.c
+DSOURCES	=	$(SOURCES) debug.c
+HEADERS		=	args.h ctags.h debug.h entry.h general.h get.h \
+				keyword.h main.h options.h parse.h read.h sort.h \
+				strlist.h vstring.h
+
+DOS_VER_FILES=	ctags.h ctags.1 ctags.lsm NEWS
+
+VERSION_FILES=	$(DOS_VER_FILES) configure.in
+
+DIST_FILES	=	COPYING FAQ INSTALL INSTALL.DOS QUOTES README configure.in \
+				acconfig.h mkinstalldirs Makefile.in Makefile.amiga \
+				Makefile.bc3 Makefile.bc5 Makefile.djg Makefile.maint \
+				Makefile.mvc Makefile.os2 Makefile.qdos Makefile.ming \
+				descrip.mms \
+				$(DSOURCES) qdos.c strstr.c $(HEADERS) ctags.1 ctags.lsm NEWS
+
+DOS_FILES	=	COPYING FAQ INSTALL.DOS QUOTES README \
+				Makefile.bc3 Makefile.bc5 Makefile.djg Makefile.os2 \
+				Makefile.ming Makefile.mvc \
+				$(DSOURCES) $(HEADERS)
+
+CVS_FILES	=	$(DIST_FILES) ctags.spec
+
+WARNINGS	=	-Wall -W -Wtraditional -Wpointer-arith -Wcast-align \
+				-Wwrite-strings -Wmissing-prototypes -Wmissing-declarations \
+				-Wnested-externs -Wcast-qual -Wshadow \
+				-pedantic -Wstrict-prototypes # -Wconversion -Werror
+
+ERRFILE	= errors
+REDIR	= 2>&1 | tee $(ERRFILE)
+
+RPM_ROOT= $(HOME)/Develop
+CTAGS_DOSDIR = win32
+WEB_ARCHIVE_DIR = $(HOME)/public_html/archives
+DEP_DIR	= .deps
+
+CC		= egcs
+DEFS	= -I. -DHAVE_CONFIG_H
+CFLAGS	= $(DEFS)
+OPT		= -O3
+DCFLAGS	= $(CFLAGS) -DDEBUG -DINTERNAL_SORT
+LD		= gcc
+
+AUTO_GEN	= configure config.h.in
+CONFIG_GEN	= config.cache config.log config.status config.run config.h Makefile
+PROF_GEN	= gmon.out
+COV_GEN		= *.da *.gcov
+
+#
+# Targets
+#
+ifeq ($(findstring clean,$(MAKECMDGOALS)),)
+ifneq ($(MAKECMDGOALS),setup)
+ifeq ($(wildcard config.h),)
+ctags dctags ctags.prof ctags.cov:
+	$(MAKE) config.h
+	$(MAKE) $(MAKECMDGOALS)
+else
+all: dctags ctags tags syntax.vim
+
+include $(DSOURCES:%.c=$(DEP_DIR)/%.d)
+
+#
+# Executable targets
+#
+ctags: $(SOURCES:.c=.o)
+	@ echo "-- Linking $@"
+	@ $(LD) -o $@ $(LFLAGS) $^
+
+dctags: $(SOURCES:.c=.od) debug.od
+	@ echo "-- Building $@"
+	$(LD) -o $@ $(LFLAGS) $^ -lefence
+
+mctags: $(SOURCES:.c=.om) debug.om safe_malloc.om
+	@ echo "-- Building $@"
+	$(LD) -o $@ $(LFLAGS) $^
+
+ctags.prof: $(SOURCES) $(HEADERS) Makefile
+	$(CC) -pg $(CFLAGS) $(WARNINGS) $(SOURCES) -o $@
+
+ctags.cov: $(SOURCES) $(HEADERS) Makefile
+	$(CC) -fprofile-arcs -ftest-coverage $(CFLAGS) $(WARNINGS) $(SOURCES) -o $@
+
+gcov: $(SOURCES:.c=.c.gcov)
+
+endif
+endif
+endif
+
+ctags32.exe: $(SOURCES) $(HEADERS)
+	gcc-dos -DMSDOS -O2 -Wall -s -o $@ $(SOURCES)
+
+#
+# Support targets
+#
+FORCE:
+
+config.h.in: acconfig.h configure.in
+	autoheader
+	@ touch $@
+
+configure: configure.in
+	autoconf
+
+config.h: config.h.in configure
+	./configure --enable-maintainer-mode
+	@ touch $@
+
+depclean:
+	rm -f $(DEP_DIR)/*.d
+
+profclean:
+	rm -f $(PROF_GEN)
+
+gcovclean:
+	rm -f $(COV_GEN)
+
+clean: depclean profclean gcovclean
+	rm -f *.[oi] *.o[dm] ctags dctags ctags*.exe ctags.man \
+	      ctags.prof ctags.cov *.bb *.bbg tags TAGS syntax.vim $(ERRFILE)
+
+distclean: clean
+	rm -f $(CONFIG_GEN)
+
+maintainer-clean maintclean: distclean
+	rm -f $(AUTO_GEN)
+
+ctags.man: ctags.1
+	@ groff -Tascii -mandoc $< | sed 's/.//g' > $@
+
+tags: $(DSOURCES) $(HEADERS)
+	@ echo "-- Building tag file"
+	@ ctags $^
+
+#
+# Create a Vim syntax file for all typedefs
+#
+syntax: syntax.vim
+syntax.vim: $(DSOURCES) $(HEADERS)
+	@ echo "-- Generating syntax file"
+	@ ctags --c-types=ct --file-scope -o- $^ |\
+		awk 'BEGIN{printf("syntax keyword Typedef\t")}\
+				{printf("%s ", $$1)}END{print ""}' > $@
+
+#
+# CVS management
+#
+status:
+	@ cvs -n -q update
+
+cvs-tag-%:
+	@ echo "---------- Tagging release `echo $* | sed 's/\./_/g'`"
+	@ cvs tag -c -F Ctags-`echo $* | sed 's/\./_/g'`
+
+cvs-files:
+	@ls -1 $(CVS_FILES)
+
+#
+# Release management
+#
+ctags-%.tar.gz: $(DIST_FILES) $(VERSION_FILES)
+	@ echo "---------- Building tar ball"
+	if [ -d ctags-$* ] ;then rm -fr ctags-$** ;fi
+	mkdir ctags-$*
+	cp -p $(DIST_FILES) ctags-$*/
+	for file in $(VERSION_FILES) ;do \
+		rm -f ctags-$*/$${file} ;\
+		sed -e "s/@@VERSION@@/$*/" \
+		    -e "s/@@LSMDATE@@/`date +'%d%b%y' | tr 'a-z' 'A-Z'`/" \
+			$${file} > ctags-$*/$${file} ;\
+	done
+	chmod 644 ctags-$*/*
+	chmod 755 ctags-$*/mkinstalldirs
+	(cd ctags-$*; autoheader; chmod 644 config.h.in)
+	(cd ctags-$*; autoconf; chmod 755 configure)
+	tar -zcf $@ ctags-$*
+
+ctags-%.tar.Z: ctags-%.tar.gz
+	tar -Zcf $@ ctags-$*
+
+vim-ctags-%.tar.gz: ctags-%.tar.gz
+	@ echo "---------- Building Vim tar ball"
+	if [ -d vim ] ;then rm -fr vim ;fi
+	mkdir -p vim
+	cp -pr ctags-$* vim/ctags
+	( cd vim/ctags ;\
+	  mv README README.txt ;\
+	  rm COPYING QUOTES ;\
+	  echo "You can obtain a copy of the GNU General Public License from the GNU web" >> COPYING ;\
+	  echo "site at http://www.gnu.org/copyleft/gpl.html, or from the Exuberant Ctags" >> COPYING ;\
+	  echo "web site at http://darren.hiebert.com/ctags/gpl.html, or by writing to" >> COPYING ;\
+	  echo "the Free Software Foundation, Inc., 59 Temple Place, Suite 330, Boston," >> COPYING ;\
+	  echo "MA 02111-1307  USA" >> COPYING ;\
+	  chmod 644 COPYING ;\
+	)
+	cd vim; tar -zcf ../$@ ctags
+
+$(CTAGS_DOSDIR)/ctags%: FORCE
+	if [ -d $(CTAGS_DOSDIR)/ctags$* ] ;\
+		then rm -fr $(CTAGS_DOSDIR)/ctags$*/* ;\
+		else mkdir -p $(CTAGS_DOSDIR)/ctags$* ;\
+	fi
+
+dos1-%: $(DOS_FILES)
+	for file in $^ ;do \
+		unix2dos $${file} $(CTAGS_DOSDIR)/ctags$*/$${file} ;\
+	done
+	cd $(CTAGS_DOSDIR); mv makefile makefile.bak; \
+		sed -e 's/^\(VERSION =\) [0-9]\+/\1 $*/' makefile.bak > makefile
+
+dos2-%: $(DOS_VER_FILES) ctags.man
+	for file in $^ ;do \
+		rm -f $(CTAGS_DOSDIR)/ctags`echo $*|sed 's/\.//g'`/$${file} ;\
+		sed -e "s/@@VERSION@@/$*/" \
+		    -e "s/@@LSMDATE@@/`date +'%d%b%y' | tr 'a-z' 'A-Z'`/" $${file} |\
+			unix2dos > $(CTAGS_DOSDIR)/ctags`echo $*|sed 's/\.//g'`/$${file} ;\
+	done
+
+dos-%:
+	@ echo "---------- Building MSDOS release directory"
+	$(MAKE) $(CTAGS_DOSDIR)/ctags`echo $*|sed 's/\.//g'` \
+			dos1-`echo $*|sed 's/\.//g'` dos2-$*
+
+rpm-%: ctags-%.tar.gz ctags.spec
+	@ echo "---------- Building RPM"
+	cp -p ctags-$*.tar.gz $(RPM_ROOT)/SOURCES/
+	sed -e "s/@@VERSION@@/$*/" ctags.spec > $(RPM_ROOT)/SPECS/ctags-$*.spec
+	(cd $(RPM_ROOT)/SPECS; rpm --sign -ba ctags-$*.spec)
+	rm -fr $(RPM_ROOT)/BUILD/ctags-$*
+
+ctags32-%: ctags-%.tar.gz
+	@ echo "---------- Building DPMS binary for MSDOS"
+	(cd ctags-$*; $(MAKE) -f ../Makefile ctags32.exe; mv ctags32.exe ..)
+	rm -f $(CTAGS_DOSDIR)/ctags32.exe
+	mcopy ctags32.exe $(CTAGS_DOSDIR)
+
+#
+# Prevent make from deleting these automatically
+#
+.PRECIOUS: ctags-%.tar.gz ctags-%.tar.Z vim-ctags-%.tar.gz
+
+cleanrelease-%:
+	rm -f ctags-$*.tar.gz vim-ctags-$*.tar.gz
+	rm -fr ctags-$*
+	rm -fr $(CTAGS_DOSDIR)/ctags`echo $*|sed 's/\.//g'`
+	rm -f $(RPM_ROOT)/SOURCES/ctags-$*.tar.gz
+	rm -f $(RPM_ROOT)/RPMS/i386/ctags-$*-1.i386.rpm
+	rm -f $(RPM_ROOT)/SRPMS/ctags-$*-1.src.rpm
+	rm -f $(RPM_ROOT)/SPECS/ctags-$*.spec
+
+release-%: cvs-tag-% ctags-%.tar.gz ctags-%.tar.Z vim-ctags-%.tar.gz dos-% rpm-%
+	@ echo "---------- Copying files to web archive"
+	cp -p ctags-$*.tar.* $(WEB_ARCHIVE_DIR)
+	cp -p $(RPM_ROOT)/RPMS/i386/ctags-$*-1.i386.rpm $(WEB_ARCHIVE_DIR)
+	cp -p $(RPM_ROOT)/SRPMS/ctags-$*-1.src.rpm $(WEB_ARCHIVE_DIR)
+	cp -p ctags-$*/ctags.lsm $(WEB_ARCHIVE_DIR)/ctags-$*.lsm
+	chmod o+r $(WEB_ARCHIVE_DIR)/*
+	@ echo "---------- Release $* completed"
+
+#
+# Dependency file generation
+#
+$(DEP_DIR)/%.d: %.c Makefile.maint
+	@ if [ ! -d $(DEP_DIR) ] ;then mkdir -p $(DEP_DIR) ;fi
+	@ $(CC) -M $(DCFLAGS) $< | sed 's/\($*\.o\)\([ :]\)/\1 $*.od $*.om $(@F)\2/g' > $@
+
+
+%.inc: %.c Makefile
+	-@ $(CC) -MM $(DCFLAGS) $<
+
+#
+# Compilation rules
+#
+%.o : %.c $(DEP_DIR)/%.d
+	@ echo "-- Compiling $<"
+	@ $(CC) $(CFLAGS) -DEXTERNAL_SORT $(OPT) $(WARNINGS) -Wuninitialized -O -c $<  $(REDIR)
+
+%.od : %.c $(DEP_DIR)/%.d
+	@ echo "-- Compiling (debug) $<"
+	@ $(CC) -g $(DCFLAGS) $(WARNINGS) -o $*.od -c $<  $(REDIR)
+
+%.om : %.c $(DEP_DIR)/%.d
+	@ echo "-- Compiling (safe alloc) $<"
+	@ $(CC) -g -DTRAP_MEMORY_CALLS $(DCFLAGS) $(WARNINGS) -o $*.om -c $<  $(REDIR)
+
+%.i : %.c $(DEP_DIR)/%.d FORCE
+	$(CC) $(DCFLAGS) $(WARNINGS) -Wuninitialized -O -E $< > $@ $(REDIR)
+
+%.ic : %.c $(DEP_DIR)/%.d FORCE
+	$(CC) $(DCFLAGS) $(WARNINGS) -Wuninitialized -O -E $< | noblanks > $@ $(REDIR)
+
+%.err: %.c
+	@ $(CC) $(DCFLAGS) $(WARNINGS) -Wuninitialized -O -c $<
+	@ rm $*.o
+
+%.c.gcov: %.da
+	@ gcov $*.c
+
+# vi:ts=4 sw=4

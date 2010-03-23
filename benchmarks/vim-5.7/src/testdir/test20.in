@@ -1,0 +1,12 @@
+Tests Blockwise Visual when there are TABs before the text.
+
+STARTTEST
+/start
+jjlld:.,$w! test.out
+:qa!
+ENDTEST
+
+test text test tex start here
+		some text
+		test text
+test text

@@ -1,0 +1,30 @@
+/* XPM */
+static char * tb_new_session_xpm[] = {
+/* width height num_colors chars_per_pixel */
+"18 18 6 1",
+/* colors */
+" 	c None",
+".	c grey50",
+"X	c white",
+"o	c black",
+"O	c darkgray",
+"+	c red",
+/* pixels */
+"    .  .X.  .     ",
+"     . oXo .      ",
+"    ..oXXXo..     ",
+"    XXXXXXXXX     ",
+"    ..oXXXo..     ",
+"     . oXo .      ",
+"    .  .X.  .     ",
+"        .         ",
+"   ooooooooooooo  ",
+"  oXXXXXXXXXXOO.o ",
+" oXXXXXXXXXXXX..o ",
+" oXOOOOOOOOO++..o ",
+" oXOOOOOOOOOOO..o ",
+" oXooooooooooO..o.",
+" oXXXXXXXXXXXO..o.",
+" oO............o. ",
+"  ooooooooooooo.  ",
+"    ...........   "};

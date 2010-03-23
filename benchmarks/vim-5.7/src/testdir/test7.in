@@ -1,0 +1,20 @@
+Test for autocommand that changes the buffer list, when doing ":ball".
+
+STARTTEST
+:au BufReadPost Xxx2 bdel
+/start of
+A1:.,/end of/w! Xxx1   " write test file Xxx1
+$r2:.,/end of/w! Xxx2    " write test file Xxx2
+$r3:.,/end of/w! Xxx3    " write test file Xxx3
+$r4:ball                 " open window for all args, close Xxx2
+:.,$w! test.out          " Write contents of this file
+:w >>test.out        " Append contents of second window (Xxx1)
+:/^start of/,$w >>test.out   " Append contents of last window (this file)
+:!rm Xxx1 Xxx2 Xxx3
+:qa!
+ENDTEST
+
+start of test file Xxx
+	this is a test
+	this is a test
+end of test file Xxx

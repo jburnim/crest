@@ -1,0 +1,13 @@
+Simple makefiles are provided for a few environments.
+
+    Makefile.amiga	For Amiga using Manx C
+    Makefile.bc3	For MSDOS using Borland C/C++ 3.x
+    Makefile.bc5	For Win32 using Borland C++ 5.5
+    Makefile.djg	For MSDOS using Gnu GCC (DJGPP) compiler
+    Makefile.ming	For Win32 using Mingw32 compiler
+    Makefile.mvc	For Win32 using Microsoft Visual C++
+    Makefile.os2	For OS/2 using GCC (EMX) compiler
+    Makefile.qdos	For QDOS using C68 compiler
+
+Make sure that your makefile defines the appropriate label for the host for
+which you are compiling (i.e. AMIGA, MSDOS, OS2, QDOS, or WIN32)

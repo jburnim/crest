@@ -1,0 +1,6 @@
+
+Just a simple test to check if the test script works.
+
+STARTTEST
+ggdGathis is a test:wq! test.out
+ENDTEST

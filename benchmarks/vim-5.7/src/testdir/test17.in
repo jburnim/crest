@@ -1,0 +1,22 @@
+Tests for "gf" on ${VAR}
+
+STARTTEST
+:set isfname=@,48-57,/,.,-,_,+,,,$,:,~,{,}
+:if has("unix")
+:let $CDIR = "."
+/CDIR
+:else
+:if has("amiga")
+:let $TDIR = "/testdir"
+:else
+:let $TDIR = "."
+:endif
+/TDIR
+:endif
+gf
+:w! test.out
+:qa!
+ENDTEST
+
+	${CDIR}/test17a.in
+	$TDIR/test17a.in

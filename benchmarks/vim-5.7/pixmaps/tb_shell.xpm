@@ -1,0 +1,28 @@
+/* XPM */
+static char * tb_shell_xpm[] = {
+"18 18 5 1 0 0",
+/* colors */
+" 	c None",
+".	c black",
+"X	c grey",
+"o	c gray50",
+"O	c white",
+/* pixels */
+"                  ",
+"     ... ...      ",
+"    .oXoooXo.     ",
+"   .XOXo.oXOX.    ",
+"   .oXOXoXOXo.    ",
+"  .oXXXX.XXXXo.   ",
+" .oX.oOXoXOo.Xo.  ",
+" .XXXoOX.XOoXXX.  ",
+" .XOX.oOoOo.XOX.o ",
+" .oXOX.X.X.XOXo.o ",
+"  .oOXoXXXoXOo.o  ",
+"   .oXXXOXXXo.o   ",
+"    .XXOOOXX.o    ",
+"    ..oXXXo..o    ",
+"   .oXXXXXXXo.o   ",
+"   ...........o   ",
+"     oooooooooo   ",
+"                  "};

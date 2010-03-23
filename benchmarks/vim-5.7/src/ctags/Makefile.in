@@ -1,0 +1,193 @@
+# $Id: Makefile.in,v 8.5 1999/09/16 05:02:20 darren Exp $
+#
+# Makefile for UNIX-like platforms.
+#
+
+# These are the names of the installed programs, in case you wish to change
+# them.
+#
+CTAGS_PROG = ctags
+ETAGS_PROG = etags
+
+# This suffix will be added to all program names. This is especially for
+# installation on Win95/NT hosts using GNU-Win32
+#SUFFIX	= .exe
+
+# Set this to the path to your shell (must run Bourne shell commands).
+#
+SHELL = /bin/sh
+
+# GNU Autoconf variables. These are set by the "configure" script when it
+# runs.
+#
+exec_prefix = @exec_prefix@
+prefix	= @prefix@
+bindir	= @bindir@
+srcdir	= @srcdir@
+mandir	= @mandir@
+SLINK	= @LN_S@
+STRIP	= @STRIP@
+CC	= @CC@
+DEFS	= @DEFS@
+CFLAGS	= @CFLAGS@
+LDFLAGS	= @LDFLAGS@
+LIBOBJS	= @LIBOBJS@
+
+# If you cannot run the "configure" script to set the variables above, then
+# uncomment the defines below and customize them for your environment. If
+# your system does not support symbolic (soft) links, then remove the -s
+# from SLINK.
+#
+#srcdir	= .
+#bindir	= /usr/local/bin
+#mandir	= /usr/local/man
+#SLINK	= ln -s
+#STRIP	= strip
+#CC	= cc
+#DEFS	= -DHAVE_CONFIG_H
+#CFLAGS	= -O
+#LDFLAGS=
+
+#
+#--- You should not need to modify anything below this line. ---#
+#
+
+.SUFFIXES:
+.SUFFIXES: .c .o
+
+VPATH	= $(srcdir)
+
+INSTALL		= cp
+INSTALL_PROG	= $(INSTALL)
+INSTALL_DATA	= $(INSTALL)
+
+SRCS =	args.c eiffel.c entry.c fortran.c get.c keyword.c main.c \
+	options.c parse.c read.c sort.c strlist.c vstring.c
+OBJS =	args.o eiffel.o entry.o fortran.o get.o keyword.o main.o \
+	options.o parse.o read.o sort.o strlist.o vstring.o
+HDRS =	args.h ctags.h debug.h entry.h general.h get.h keyword.h main.h \
+	options.h parse.h read.h sort.h strlist.h vstring.h
+
+MANPAGE	= ctags.1
+
+AUTO_GEN   = configure config.h.in
+CONFIG_GEN = config.cache config.log config.status config.run \
+		config.h Makefile
+
+#
+# names for installed man pages
+#
+manext	= 1
+man1dir	= $(mandir)/man1
+CMAN	= $(CTAGS_PROG).$(manext)
+EMAN	= $(ETAGS_PROG).$(manext)
+
+#
+# destinations for installed files
+#
+CTAGS_EXEC	= $(CTAGS_PROG)$(SUFFIX)
+ETAGS_EXEC	= $(ETAGS_PROG)$(SUFFIX)
+DEST_CTAGS	= $(bindir)/$(CTAGS_EXEC)
+DEST_ETAGS	= $(bindir)/$(ETAGS_EXEC)
+DEST_CMAN	= $(man1dir)/$(CMAN)
+DEST_EMAN	= $(man1dir)/$(EMAN)
+
+#
+# primary rules
+#
+all: $(CTAGS_EXEC)
+
+$(CTAGS_EXEC): $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBOBJS)
+
+dctags: debug.c $(SRCS) $(HDRS)
+	$(CC) -I. -I$(srcdir) $(DEFS) -DDEBUG -g $(LDFLAGS) -o $@ $(LIBOBJS) debug.c $(SRCS)
+
+$(OBJS): $(HDRS) config.h
+
+#
+# generic install rules
+#
+install: @install_targets@
+
+install-strip: install
+
+install-ctags: install-cbin install-cman
+install-etags: install-ebin install-eman
+
+$(bindir) $(man1dir):
+	$(srcdir)/mkinstalldirs $@
+
+FORCE:
+
+#
+# install the executables
+#
+install-bin: install-cbin install-ebin
+install-cbin: $(DEST_CTAGS)
+install-ebin: $(DEST_ETAGS)
+
+$(DEST_CTAGS): $(CTAGS_EXEC) $(bindir) FORCE
+	$(INSTALL_PROG) $(CTAGS_EXEC) $@  &&  chmod 755 $@
+	$(STRIP) $(DEST_CTAGS)
+
+$(DEST_ETAGS): $(DEST_CTAGS)
+	- cd $(bindir) && $(SLINK) $(CTAGS_EXEC) $(ETAGS_EXEC)
+
+#
+# install the man pages
+#
+install-man: install-cman install-eman
+install-cman: $(DEST_CMAN)
+install-eman: $(DEST_EMAN)
+
+$(DEST_CMAN): $(man1dir) $(MANPAGE) FORCE
+	- $(INSTALL_DATA) $(srcdir)/$(MANPAGE) $@  &&  chmod 644 $@
+
+$(DEST_EMAN): $(DEST_CMAN)
+	- cd $(man1dir) && $(SLINK) $(CMAN) $(EMAN)
+
+#
+# rules for uninstalling
+#
+uninstall: uninstall-bin uninstall-man
+
+uninstall-bin:
+	- rm -f $(DEST_CTAGS) $(DEST_ETAGS)
+
+uninstall-man:
+	- rm -f $(DEST_CMAN) $(DEST_EMAN)
+
+uninstall-ctags:
+	- rm -f $(DEST_CTAGS) $(DEST_CMAN)
+
+uninstall-etags:
+	- rm -f $(DEST_ETAGS) $(DEST_EMAN)
+
+#
+# miscellaneous rules
+#
+tags: $(CTAGS_EXEC)
+	./$(CTAGS_EXEC) -p$(srcdir) $(SRCS) $(HDRS)
+
+TAGS: $(CTAGS_EXEC)
+	./$(CTAGS_EXEC) -e -p$(srcdir) $(SRCS) $(HDRS)
+
+clean:
+	@ rm -f $(OBJS) $(CTAGS_EXEC) tags TAGS
+
+mostlyclean: clean
+
+distclean: clean
+	@ rm -f $(CONFIG_GEN)
+
+maintainerclean: distclean
+	@ rm -f $(AUTO_GEN)
+
+#
+# implicit rules
+#
+.c.o:
+	$(CC) -I. -I$(srcdir) $(DEFS) $(CFLAGS) -c $<
+
+# vi:set tabstop=8:
