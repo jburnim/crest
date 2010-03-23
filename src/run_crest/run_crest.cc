@@ -9,6 +9,7 @@
 // for details.
 
 #include <assert.h>
+#include <stdio.h>
 #include <time.h>
 
 #include "run_crest/concolic_search.h"

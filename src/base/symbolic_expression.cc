@@ -9,6 +9,7 @@
 // for details.
 
 #include <assert.h>
+#include <stdio.h>
 #include "base/symbolic_expression.h"
 
 namespace crest {
