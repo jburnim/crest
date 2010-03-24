@@ -349,12 +349,9 @@ static int my_isesc(c) int c; { return c == ESC; }
  */
 #if defined(macintosh) || defined(__BEOS__)
 /* the compiler doesn't understand the other one */
-    static int (*
-skip_class_name(char_u **pp))__ARGS((int))
+    static int (*skip_class_name(char_u **pp))__ARGS((int))
 #else
-    static int (*
-skip_class_name(pp))__ARGS((int))
-    char_u	**pp;
+    static int (*skip_class_name(char_u **pp))__ARGS((int))
 #endif
 {
     typedef struct
