@@ -1,5 +1,13 @@
 # Makefile for Vim on Unix and Unix-like systems	vim:ts=8:sw=8:tw=78
-#
+
+# To make instrumented Vim 5.7 for CREST, type:
+#     make crest
+
+CREST_CFLAGS = -DCREST -I../../../include
+CREST_LDFLAGS = -L../../../lib
+CREST_LIBS = -lcrest -lstdc++
+CREST_CC = ../../../cil/bin/cilly --save-temps --doCrestInstrument
+
 # This Makefile is loosely based on the GNU Makefile conventions found in
 # standards.info.
 #
@@ -290,6 +298,16 @@ CC=
 
 include config.mk
 #.include "config.mk"
+
+ifeq ($(MAKECMDGOALS),crest)
+
+CFLAGS += $(CREST_CFLAGS)
+LDFLAGS += $(CREST_LDFLAGS)
+LIBS += $(CREST_LIBS)
+
+CC = $(CREST_CC)
+
+endif
 
 # Include the configuration choices first, so we can override everything
 # below. As shipped, this file contains a target that causes to run
@@ -1212,7 +1230,11 @@ PRO_MANUAL = os_amiga.pro os_msdos.pro os_win32.pro os_beos.pro os_vms.pro \
 	os_riscos.pro
 
 # Default target is making the executable and tools
-all: $(VIMTARGET) $(TOOLS)
+all: $(VMTARGET) $(TOOLS)
+
+# Target for building executable with CREST instrumentation.
+crest: clean $(VIMTARGET)
+	../../../bin/process_cfg
 
 tools: $(TOOLS)
 
@@ -1542,6 +1564,8 @@ uninstall_runtime:
 # Clean up all the files that have been produced, except configure's.
 # We support common typing mistakes for Juergen! :-)
 clean celan: testclean
+	-rm -f idcount stmtcount funcount branches cfg cfg_func_map
+	-rm -f *.i *.cil.c *.cil.i
 	-rm -f *.o core $(VIMTARGET).core $(VIMTARGET) xxd/*.o
 	-rm -f $(TOOLS) osdef.h pathdef.c if_perl.c
 	-rm -f conftest* *~ link.sed

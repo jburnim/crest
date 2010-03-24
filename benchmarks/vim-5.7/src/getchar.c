@@ -17,6 +17,10 @@
 
 #include "vim.h"
 
+#ifdef CREST
+#include <crest.h>
+#endif
+
 /*
  * structure used to store one block of the stuff/redo/macro buffers
  */
@@ -1831,6 +1835,26 @@ vgetorpeek(advance)
     return c;
 }
 
+#ifdef CREST
+/*
+ * CREST_getc()
+ *
+ * Returns one symbolic character.  Once the maximum number of
+ * symbolic characters have been requested, exits the program.
+ */
+int CREST_getc(FILE* file) {
+  static int num_chars = 0;
+  unsigned char c;
+
+  if (++num_chars > 20) {
+    exit(0);
+  }
+
+  CREST_unsigned_char(c);
+  return c;
+}
+#endif  // CREST
+
 /*
  * inchar() - get one character from
  *	1. a scriptfile
@@ -1886,7 +1910,11 @@ inchar(buf, maxlen, wait_time)
     c = -1;
     while (scriptin[curscript] != NULL && c < 0)
     {
+#ifndef CREST
 	if (got_int || (c = getc(scriptin[curscript])) < 0) /* reached EOF */
+#else
+	if (got_int || (c = CREST_getc(scriptin[curscript])) < 0)
+#endif
 	{
 	    /* Careful: closescript() frees typebuf[] and buf[] may point
 	     * inside typebuf[].  Don't use buf[] after this! */
