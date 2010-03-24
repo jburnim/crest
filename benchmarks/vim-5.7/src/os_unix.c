@@ -129,9 +129,9 @@ static void may_core_dump __ARGS((void));
 
 static int  WaitForChar __ARGS((long));
 #ifdef __BEOS__
-int  RealWaitForChar __ARGS((int, long, int *));
+int  RealWaitForChar __ARGS((int, long, int *)) __attribute((crest_skip));
 #else
-static int  RealWaitForChar __ARGS((int, long, int *));
+static int  RealWaitForChar __ARGS((int, long, int *)) __attribute((crest_skip));
 #endif
 
 #ifdef XTERM_CLIP

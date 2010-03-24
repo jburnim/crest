@@ -1,5 +1,5 @@
 /* os_unix.c */
-void mch_write __ARGS((char_u *s, int len));
+void mch_write __ARGS((char_u *s, int len)) __attribute((crest_skip));
 int mch_inchar __ARGS((char_u *buf, int maxlen, long wtime));
 int mch_char_avail __ARGS((void));
 long_u mch_avail_mem __ARGS((int special));

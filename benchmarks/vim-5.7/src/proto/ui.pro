@@ -1,5 +1,5 @@
 /* ui.c */
-void ui_write __ARGS((char_u *s, int len));
+void ui_write __ARGS((char_u *s, int len)) __attribute((crest_skip));
 void ui_inchar_undo __ARGS((char_u *s, int len));
 int ui_inchar __ARGS((char_u *buf, int maxlen, long wtime));
 int ui_char_avail __ARGS((void));

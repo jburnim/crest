@@ -2339,7 +2339,7 @@ out_char(c)
 	out_flush();
 }
 
-static void out_char_nf __ARGS((unsigned));
+static void out_char_nf __ARGS((unsigned)) __attribute((crest_skip));
 
 /*
  * out_char_nf(c): like out_char(), but don't flush when p_wd is set
