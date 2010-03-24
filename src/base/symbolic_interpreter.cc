@@ -170,6 +170,14 @@ void SymbolicInterpreter::ApplyBinaryOp(id_t id, binary_op_t op, value_t value) 
       }
       break;
 
+    case ops::SHIFT_L:
+      if (a.expr != NULL) {
+        // Convert to multiplication by a (concrete) constant.
+        *a.expr *= (1 << b.concrete);
+      }
+      delete b.expr;
+      break;
+
     case ops::MULTIPLY:
       if (a.expr == NULL) {
 	swap(a, b);
