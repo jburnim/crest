@@ -512,9 +512,8 @@ char *pat, *sub;
     bool result;
 
     result = getline(line, MAXSTR);
-    while ((result)) {
-	subline(line, pat, sub);
-	result = getline(line, MAXSTR);
+    if (result) {
+      subline(line, pat, sub);
     }
 }
 
