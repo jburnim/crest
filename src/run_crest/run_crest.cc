@@ -10,7 +10,7 @@
 
 #include <assert.h>
 #include <stdio.h>
-#include <time.h>
+#include <sys/time.h>
 
 #include "run_crest/concolic_search.h"
 
@@ -31,15 +31,9 @@ int main(int argc, char* argv[]) {
   string search_type = argv[3];
 
   // Initialize the random number generator.
-#if 1
-  struct timespec ts;
-  clock_gettime(CLOCK_REALTIME, &ts);
-  srand(ts.tv_nsec);
-#else
   struct timeval tv;
   gettimeofday(&tv, NULL);
-  srand((tv.tv_sec << 20) + tv.tv_usec);
-#endif
+  srand((tv.tv_sec * 1000000) + tv.tv_usec);
 
   crest::Search* strategy;
   if (search_type == "-random") {
