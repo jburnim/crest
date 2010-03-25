@@ -11,6 +11,8 @@
 #ifndef BASE_BASIC_TYPES_H__
 #define BASE_BASIC_TYPES_H__
 
+#include <cstddef>
+
 namespace crest {
 
 typedef int id_t;
@@ -53,11 +55,15 @@ enum type_t { U_CHAR = 0,       CHAR = 1,
 }
 using types::type_t;
 
+value_t CastTo(value_t val, type_t type);
+
 extern const char* kMinValueStr[];
 extern const char* kMaxValueStr[];
 
 extern const value_t kMinValue[];
 extern const value_t kMaxValue[];
+
+extern const size_t kByteSize[];
 
 }  // namespace crest
 
