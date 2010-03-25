@@ -4,11 +4,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <crest.h>
+
 void	Caseerror();
 
 typedef char	bool;
 # define false 0
 # define true  1
+
+# define MYMAX 10
+# define MYLINEMAX 20
 
 # define MAXSTR 100
 # define MAXPAT MAXSTR
@@ -40,9 +45,12 @@ getline(s, maxsize)
 char	*s;
 int	maxsize;
 {
-    char *result;
-    result = fgets(s, maxsize, stdin);
-    return (result != NULL);
+    int i;
+    for (i = 0; i < MYLINEMAX-1; i++) {
+	CREST_char(s[i]);
+    }
+    s[i] = '\0';
+    return true;
 }
 
 int
@@ -518,37 +526,37 @@ char *pat, *sub;
 }
 
 int
-main(argc, argv)
-int	argc;
-char	*argv[];
+main()
 {
    string pat, sub;
    bool result;
 
-   if (argc < 2)
-   {
-       (void)fprintf(stdout, "usage: change from [to]\n");
-       exit(1);
-   };
+   string input1;
+   string input2;
 
-   result = getpat(argv[1], pat);
+   int i;
+   for (i = 0; i < MYMAX-1; i++) {
+     CREST_char(input1[i]);
+   }
+   input1[i] = 0;
+
+   result = getpat(input1, pat);
    if (!result)
    {
        (void)fprintf(stdout, "change: illegal \"from\" pattern\n");
        exit(2);
    }
 
-   if (argc >= 3)
+   for (i = 0; i < MYMAX-1; i++) {
+       CREST_char(input2[i]);
+   }
+   input2[i] = 0;
+
+   result = getsub(input2, sub);
+   if (!result)
    {
-       result = getsub(argv[2], sub);
-       if (!result)
-       {
-	   (void)fprintf(stdout, "change: illegal \"to\" string\n");
-	   exit(3);
-       }
-   } else
-   {
-       sub[0] = '\0';
+       (void)fprintf(stdout, "change: illegal \"to\" string\n");
+       exit(3);
    }
 
    change(pat, sub);
