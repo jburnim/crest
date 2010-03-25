@@ -11,6 +11,7 @@
 #include <assert.h>
 #include <fstream>
 #include <string>
+#include <sys/time.h>
 #include <vector>
 
 #include "base/symbolic_interpreter.h"
@@ -49,7 +50,12 @@ static void __CrestAtExit();
 
 
 void __CrestInit() {
-  /* read the input */
+  // Initialize the random number generator.
+  struct timeval tv;
+  gettimeofday(&tv, NULL);
+  srand((tv.tv_sec * 1000000) + tv.tv_usec);
+
+  // Read the input.
   vector<value_t> input;
   std::ifstream in("input");
   value_t val;
@@ -69,7 +75,7 @@ void __CrestInit() {
 void __CrestAtExit() {
   const SymbolicExecution& ex = SI->execution();
 
-  /* Write the execution out to file 'szd_execution'. */
+  // Write the execution out to file 'szd_execution'.
   string buff;
   buff.reserve(1<<26);
   ex.Serialize(&buff);

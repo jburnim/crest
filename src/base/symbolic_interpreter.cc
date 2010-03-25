@@ -297,8 +297,9 @@ value_t SymbolicInterpreter::NewInput(type_t type, addr_t addr) {
   if (num_inputs_ < ex_.inputs().size()) {
     ret = ex_.inputs()[num_inputs_];
   } else {
-    // New inputs are initially zero.  (Could randomize instead.)
-    ex_.mutable_inputs()->push_back(0);
+    // Generate a new random input.
+    ex_.mutable_inputs()->push_back(CastTo(rand(), type));
+    // TODO: User a better pseudorandom number generator.
   }
 
   num_inputs_ ++;
