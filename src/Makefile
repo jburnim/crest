@@ -5,7 +5,7 @@ CC=$(CXX)
 CFLAGS = -I. -I$(YICES_DIR)/include -Wall -O2
 CXXFLAGS = $(CFLAGS)
 LDFLAGS = -L$(YICES_DIR)/lib
-LOADLIBES = -lyices -lrt
+LOADLIBES = -lyices
 
 BASE_LIBS = base/basic_types.o base/symbolic_execution.o \
             base/symbolic_interpreter.o base/symbolic_path.o \
