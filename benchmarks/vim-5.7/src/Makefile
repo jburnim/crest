@@ -1230,7 +1230,7 @@ PRO_MANUAL = os_amiga.pro os_msdos.pro os_win32.pro os_beos.pro os_vms.pro \
 	os_riscos.pro
 
 # Default target is making the executable and tools
-all: $(VMTARGET) $(TOOLS)
+all: $(VIMTARGET) $(TOOLS)
 
 # Target for building executable with CREST instrumentation.
 crest: clean $(VIMTARGET)
