@@ -37,7 +37,7 @@ SymbolicInterpreter::SymbolicInterpreter()
 }
 
 SymbolicInterpreter::SymbolicInterpreter(const vector<value_t>& input)
-  : pred_(NULL), ex_(true) {
+  : pred_(NULL), ex_(true), num_inputs_(0) {
   stack_.reserve(16);
   ex_.mutable_inputs()->assign(input.begin(), input.end());
 }
