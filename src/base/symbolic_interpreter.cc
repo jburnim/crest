@@ -298,8 +298,9 @@ value_t SymbolicInterpreter::NewInput(type_t type, addr_t addr) {
     ret = ex_.inputs()[num_inputs_];
   } else {
     // Generate a new random input.
-    ex_.mutable_inputs()->push_back(CastTo(rand(), type));
     // TODO: User a better pseudorandom number generator.
+    ret = CastTo(rand(), type);
+    ex_.mutable_inputs()->push_back(ret);
   }
 
   num_inputs_ ++;
