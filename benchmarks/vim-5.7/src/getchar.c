@@ -1066,6 +1066,33 @@ static int old_char = -1;	/* ungotten character */
     int
 vgetc()
 {
+#ifdef CREST
+    {
+	/*
+	 * Return up to a fixed number of symbolic characters, and
+	 * then exit.
+	 *
+	 * Note that, at this point in Vim 5.7's input handling, input
+	 * characters have been encoded/packed into unsigned short
+	 * integers.  Thus, we return sybmolic unsigned shorts.
+	 */
+	unsigned short c;
+	static int num_chars = 0;
+	if (old_char >= 0) {
+	    int tmp = old_char;
+	    old_char = -1;
+	    return tmp;
+	}
+	if (++num_chars <= 20) {
+	    CREST_unsigned_short(c);
+	    return c;
+	} else {
+	    exit(0);
+	    return 0;
+	}
+    }
+#endif  // CREST
+
     int	    c, c2;
 
     mod_mask = 0x0;
@@ -1145,12 +1172,16 @@ vgetc()
     int
 safe_vgetc()
 {
+#ifdef CREST
+    return vgetc();
+#else
     int	c;
 
     c = vgetc();
     if (c == NUL)
 	c = get_keystroke();
     return c;
+#endif
 }
 
     int
@@ -1885,6 +1916,15 @@ inchar(buf, maxlen, wait_time)
     int		c;
     int		i;
 
+#ifdef CREST
+    /*
+     * We only instrument characters read through vgetc and safe_vgetc.
+     * If Vim gets into a mode where it bypasses those functions, exit
+     * so that we do not pause waiting for a key press.
+     */
+    exit(0);
+#endif
+
     if (wait_time == -1L || wait_time > 100L)  /* flush output before waiting */
     {
 	cursor_on();
@@ -1910,10 +1950,19 @@ inchar(buf, maxlen, wait_time)
     c = -1;
     while (scriptin[curscript] != NULL && c < 0)
     {
-#ifndef CREST
-	if (got_int || (c = getc(scriptin[curscript])) < 0) /* reached EOF */
-#else
+#ifdef CREST
+	/*
+	 * This shows an alternate way to instrument Vim 5.7 for CREST.
+	 *
+	 * It returns a fixed number of symbolic characters, as if from
+	 * a script, and then calls exit (inside of CREST_getc).
+	 *
+	 * (To use this option, remove occurrences of "#ifdef CREST" at
+	 * the beginning of vgetc and safe_vgetc.)
+	 */
 	if (got_int || (c = CREST_getc(scriptin[curscript])) < 0)
+#else
+	if (got_int || (c = getc(scriptin[curscript])) < 0) /* reached EOF */
 #endif
 	{
 	    /* Careful: closescript() frees typebuf[] and buf[] may point
