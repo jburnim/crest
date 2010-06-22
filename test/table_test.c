@@ -21,9 +21,9 @@ int main(void) {
   CREST_int(x);
   CREST_int(y);
 
-  if (x >= 97)
+  if ((x < 0) || (x >= 97))
     return 0;
-  if (y >= 12)
+  if ((y < 0) || (y >= 12))
     return 0;
 
   for (i = 0; i < 100; i++) {
@@ -37,10 +37,18 @@ int main(void) {
   }
 
   if (A[x] == 7) {
+    /*
+     * CREST cannot solve for 'x' to reach this branch because it does
+     * not treat array indexing symbolically.
+     */
     printf("Hello!\n");
   }
 
   if (B[y][x] == 42) {
+    /*
+     * CREST cannot solve for 'x' and 'y' to reach this branch because
+     * it does not treat array indexing symbolically.
+     */
     printf("World!\n");
   }
 
