@@ -32,12 +32,12 @@ namespace crest {
 typedef map<addr_t,SymbolicExpr*>::const_iterator ConstMemIt;
 
 SymbolicInterpreter::SymbolicInterpreter()
-  : pred_(NULL), ex_(true), num_inputs_(0) {
+  : pred_(NULL), return_value_(false), ex_(true), num_inputs_(0) {
   stack_.reserve(16);
 }
 
 SymbolicInterpreter::SymbolicInterpreter(const vector<value_t>& input)
-  : pred_(NULL), ex_(true), num_inputs_(0) {
+  : pred_(NULL), return_value_(false), ex_(true), num_inputs_(0) {
   stack_.reserve(16);
   ex_.mutable_inputs()->assign(input.begin(), input.end());
 }
