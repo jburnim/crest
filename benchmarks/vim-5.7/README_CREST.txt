@@ -19,6 +19,15 @@ NOTES:
    possible for CREST to generate inputs that cause Vim to execute
    shell commands (e.g., 'rm -r ~').  Please exercise caution.
 
+ - Vim appears to changes the way it behaves (i.e. how it reads input
+   from the user) based on the capabilities of the terminal in which
+   it is run.  To get the best results, execute the above 'run_crest'
+   command inside a "virtual terminal" using the program 'screen'.
+
+   (This can be accomplished by executing the command "screen" right
+   before executing "run_crest ...".  Type "exit" after 'run_crest'
+   completes to quit 'screen'.)
+
  - On some executions, CREST may report a number of failed assertions,
    beginning with:
 
