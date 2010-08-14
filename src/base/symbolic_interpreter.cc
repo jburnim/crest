@@ -55,7 +55,15 @@ void SymbolicInterpreter::DumpMemory() {
     } else if ((i == stack_.size() - 1) && pred_) {
       pred_->AppendToString(&s);
     }
-    fprintf(stderr, "s%d: %lld [ %s ]\n", i, stack_[i].concrete, s.c_str());
+    if ((i == (stack_.size() - 1)) && return_value_) {
+      fprintf(stderr, "s%d: %lld [ %s ] (RETURN VALUE)\n",
+	      i, stack_[i].concrete, s.c_str());
+    } else {
+      fprintf(stderr, "s%d: %lld [ %s ]\n", i, stack_[i].concrete, s.c_str());
+    }
+  }
+  if ((stack_.size() == 0) && return_value_) {
+    fprintf(stderr, "MISSING RETURN VALUE\n");
   }
 }
 
@@ -243,11 +251,15 @@ void SymbolicInterpreter::ApplyCompareOp(id_t id, compare_op_t op, value_t value
 
 
 void SymbolicInterpreter::Call(id_t id, function_id_t fid) {
+  IFDEBUG(fprintf(stderr, "call %u\n", fid));
   ex_.mutable_path()->Push(kCallId);
+  IFDEBUG(DumpMemory());
 }
 
 
 void SymbolicInterpreter::Return(id_t id) {
+  IFDEBUG(fprintf(stderr, "return\n"));
+
   ex_.mutable_path()->Push(kReturnId);
 
   // There is either exactly one value on the stack -- the current function's
@@ -255,10 +267,14 @@ void SymbolicInterpreter::Return(id_t id) {
   assert(stack_.size() <= 1);
 
   return_value_ = (stack_.size() == 1);
+
+  IFDEBUG(DumpMemory());
 }
 
 
 void SymbolicInterpreter::HandleReturn(id_t id, value_t value) {
+  IFDEBUG(fprintf(stderr, "handle_return %lld\n", value));
+
   if (return_value_) {
     // We just returned from an instrumented function, so the stack
     // contains a single element -- the (possibly symbolic) return value.
@@ -271,6 +287,8 @@ void SymbolicInterpreter::HandleReturn(id_t id, value_t value) {
     ClearStack(-1);
     PushConcrete(value);
   }
+
+  IFDEBUG(DumpMemory());
 }
 
 
@@ -290,6 +308,8 @@ void SymbolicInterpreter::Branch(id_t id, branch_id_t bid, bool pred_value) {
 
 
 value_t SymbolicInterpreter::NewInput(type_t type, addr_t addr) {
+  IFDEBUG(fprintf(stderr, "symbolic_input %d %lu\n", type, addr));
+
   mem_[addr] = new SymbolicExpr(1, num_inputs_);
   ex_.mutable_vars()->insert(make_pair(num_inputs_ ,type));
 
@@ -304,6 +324,8 @@ value_t SymbolicInterpreter::NewInput(type_t type, addr_t addr) {
   }
 
   num_inputs_ ++;
+
+  IFDEBUG(DumpMemory());
   return ret;
 }
 
