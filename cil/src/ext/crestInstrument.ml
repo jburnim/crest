@@ -367,9 +367,9 @@ class crestInstrumentVisitor f =
         | Lval lv when hasAddress lv ->
             [mkLoad (addressOf lv) e]
 
-        | UnOp (op, e, _) ->
+        | UnOp (op, e1, _) ->
             (* Should skip this if we don't currently handle 'op'. *)
-            (instrumentExpr e) @ [mkApply1 op e]
+            (instrumentExpr e1) @ [mkApply1 op e]
 
         | BinOp (op, e1, e2, _) ->
             (* Should skip this if we don't currently handle 'op'. *)
