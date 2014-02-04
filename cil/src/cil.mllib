@@ -11,6 +11,7 @@ Canonicalize
 Cfg
 Check
 Cil
+Cilint
 Cillower
 Ciloptions
 Ciltools
@@ -64,7 +65,6 @@ Simplemem
 Simplify
 Ssa
 Stats
-Testcil
 Trace
 Uref
 Usedef

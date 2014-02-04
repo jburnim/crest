@@ -90,7 +90,7 @@ let rec map (fn: 'a -> 'b) (a: 'a t) : 'b t =
 let docArray ?(sep = chr ',') (doit: int -> 'a -> doc)
              () (elements: 'a t) =
   let len = length elements in
-  if len = 0 then
+  if len = 0 then 
     nil
   else
     let rec loop (acc: doc) i =

@@ -19,7 +19,7 @@ let debug = ref false
 let doTime = ref false
 
 
-let time s f a =
+let time s f a = 
   if !doTime then
     S.time s f a
   else f a
@@ -44,7 +44,7 @@ let registerIgnoreCall (f : instr -> bool) : unit =
   ignore_call := (fun i -> (f i) || (f' i))
 
 
-module LvExpHash =
+module LvExpHash = 
   H.Make(struct
     type t = lval
     let equal lv1 lv2 = compareLval lv1 lv2
@@ -147,8 +147,8 @@ let lvh_kill_mem lvh =
 (* need to kill exps containing a particular vi sometimes *)
 class viFinderClass vi br = object(self)
   inherit nopCilVisitor
-
-  method vvrbl vi' =
+      
+  method vvrbl vi' = 
     if vi.vid = vi'.vid
     then (br := true; SkipChildren)
     else DoChildren
@@ -216,7 +216,7 @@ class volatileFinderClass br = object(self)
   inherit nopCilVisitor
 
   method vexpr e =
-    if (hasAttribute "volatile" (typeAttrs (typeOf e)))
+    if (hasAttribute "volatile" (typeAttrs (typeOf e))) 
     then (br := true; SkipChildren)
     else DoChildren
 end
@@ -258,10 +258,10 @@ let lvh_kill_addrof_or_global lvh =
     lvh
 
 
-let lvh_handle_inst i lvh =
+let lvh_handle_inst i lvh = 
   if (!ignore_inst) i then lvh else
   match i with
-    Set(lv,e,_) -> begin
+    Set(lv,e,_) -> begin 
       match lv with
       | (Mem _, _) -> begin
 	  LvExpHash.replace lvh lv e;
@@ -271,7 +271,7 @@ let lvh_handle_inst i lvh =
       end
       | _ when not (exp_is_volatile e) -> begin
 	  (* ignore x = x *)
-	  if compareExpStripCasts (Lval lv) e then lvh
+	  if compareExpStripCasts (Lval lv) e then lvh 
 	  else begin
 	    LvExpHash.replace lvh lv e;
 	    lvh_kill_lval lvh lv;
@@ -332,7 +332,7 @@ module AvailableExps =
       if time "lvh_equals" (lvh_equals old) lvh then None else
       Some(time "lvh_combine" (lvh_combine old) lvh)
 
-    let doInstr i lvh =
+    let doInstr i lvh = 
       let action = lvh_handle_inst i in
       DF.Post(action)
 

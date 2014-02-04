@@ -9,7 +9,7 @@
 (* applicable (and implemented).                                       *)
 (***********************************************************************)
 
-(* $Id: growArray.mli 6537 2005-01-06 15:37:37Z necula $ *)
+(* $Id$ *)
 
 (** Array operations. *)
 
@@ -30,7 +30,7 @@ val make : int -> 'a fill -> 'a t
    Raise [Invalid_argument] if [n < 0] or [n > Sys.max_array_length]. *)
 
 val num_alloc_index: 'a t -> int
-(** [GrowArray.num_alloc_index a] returns the number of allocated entries in
+(** [GrowArray.num_alloc_index a] returns the number of allocated entries in 
  * the array **)
 
 val max_init_index : 'a t -> int
@@ -70,10 +70,10 @@ val set : 'a t -> int -> 'a -> unit
 
    Raise [Invalid_argument "Array.set"] if [n] is outside the range
    of the underlying array. *)
-
-val clear: 'a t -> unit
-(** [GrowArray.clear a] clears the contents of the array and sets
-   max_init_index to -1.  Suspension thunks will be rerun to regenerate the
+        
+val clear: 'a t -> unit 
+(** [GrowArray.clear a] clears the contents of the array and sets 
+   max_init_index to -1.  Suspension thunks will be rerun to regenerate the 
    initial values of the array. *)
 
 val copy : 'a t -> 'a t

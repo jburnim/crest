@@ -1,12 +1,12 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  *  Ben Liblit          <liblit@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -49,21 +49,21 @@
  * "isRoot" argument to Rmtmps.removeUnusedTemps grants this
  * flexibility.  If given, it should name a function which will return
  * true if a given global should be treated as a retained root.
- *
+ * 
  * Function Rmtmps.isDefaultRoot encapsulates the default root
  * collection, which consists of those global variables and functions
  * which are visible to the linker and runtime loader.  A client's
  * root filter can use this if the goal is to augment rather than
  * replace the standard logic.  Function Rmtmps.isExportedRoot is an
  * alternate name for this same function.
- *
+ * 
  * Function Rmtmps.isCompleteProgramRoot is an example of an alternate
  * root collection.  This function assumes that it is operating on a
  * complete program rather than just one object file.  It treats
  * "main()" as a root, as well as any function carrying the
  * "constructor" or "destructor" attribute.  All other globals are
  * candidates for removal, regardless of their linkage.
- *
+ * 
  * Note that certain CIL- and CCured-specific pragmas induce
  * additional global roots.  This functionality is always present, and
  * is not subject to replacement by "filterRoots".

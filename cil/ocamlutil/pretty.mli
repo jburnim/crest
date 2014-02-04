@@ -4,34 +4,34 @@
  *  George C. Necula	necula@cs.berkeley.edu
  *  Scott McPeak        smcpeak@cs.berkeley.edu
  *  Wes Weimer          weimer@cs.berkeley.edu
- *
+ *   
  * All rights reserved.  Permission to use, copy, modify and distribute
- * this software for research purposes only is hereby granted,
- * provided that the following conditions are met:
- * 1. Redistributions of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
- * 3. The name of the authors may not be used to endorse or promote products
- * derived from  this software without specific prior written permission.
+ * this software for research purposes only is hereby granted, 
+ * provided that the following conditions are met: 
+ * 1. Redistributions of source code must retain the above copyright notice, 
+ * this list of conditions and the following disclaimer. 
+ * 2. Redistributions in binary form must reproduce the above copyright notice, 
+ * this list of conditions and the following disclaimer in the documentation 
+ * and/or other materials provided with the distribution. 
+ * 3. The name of the authors may not be used to endorse or promote products 
+ * derived from  this software without specific prior written permission. 
  *
  * DISCLAIMER:
- * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS OR
- * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
- * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
- * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY DIRECT, INDIRECT,
- * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
- * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
- * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
- * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+ * THIS SOFTWARE IS PROVIDED BY THE AUTHORS ``AS IS'' AND ANY EXPRESS OR 
+ * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES 
+ * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
+ * IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY DIRECT, INDIRECT, 
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, 
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS 
+ * OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON 
+ * ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF 
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *)
 
-(** Utility functions for pretty-printing. The major features provided by
-    this module are
+(** Utility functions for pretty-printing. The major features provided by 
+    this module are 
 - An [fprintf]-style interface with support for user-defined printers
 - The printout is fit to a width by selecting some of the optional newlines
 - Constructs for alignment and indentation
@@ -39,24 +39,24 @@
 - Constructs for printing lists and arrays
 
  Pretty-printing occurs in two stages:
-- Construct a {!Pretty.doc} object that encodes all of the elements to be
-  printed
+- Construct a {!Pretty.doc} object that encodes all of the elements to be 
+  printed 
   along with alignment specifiers and optional and mandatory newlines
-- Format the {!Pretty.doc} to a certain width and emit it as a string, to an
+- Format the {!Pretty.doc} to a certain width and emit it as a string, to an 
   output stream or pass it to a user-defined function
 
- The formatting algorithm is not optimal but it does a pretty good job while
- still operating in linear time. The original version was based on a pretty
- printer by Philip Wadler which turned out to not scale to large jobs.
+ The formatting algorithm is not optimal but it does a pretty good job while 
+ still operating in linear time. The original version was based on a pretty 
+ printer by Philip Wadler which turned out to not scale to large jobs. 
 *)
 
 (** API *)
 
-(** The type of unformated documents. Elements of this type can be
- * constructed in two ways. Either with a number of constructor shown below,
- * or using the {!Pretty.dprintf} function with a [printf]-like interface.
- * The {!Pretty.dprintf} method is slightly slower so we do not use it for
- * large jobs such as the output routines for a compiler. But we use it for
+(** The type of unformated documents. Elements of this type can be 
+ * constructed in two ways. Either with a number of constructor shown below, 
+ * or using the {!Pretty.dprintf} function with a [printf]-like interface. 
+ * The {!Pretty.dprintf} method is slightly slower so we do not use it for 
+ * large jobs such as the output routines for a compiler. But we use it for 
  * small jobs such as logging and error messages. *)
 type doc
 
@@ -71,9 +71,9 @@ type doc
 val nil          : doc
 
 
-(** Concatenates two documents. This is an infix operator that associates to
+(** Concatenates two documents. This is an infix operator that associates to 
     the left. *)
-val (++)         : doc -> doc -> doc
+val (++)         : doc -> doc -> doc 
 val concat       : doc -> doc -> doc
 
 (** A document that prints the given string *)
@@ -99,7 +99,7 @@ val chr          : char   -> doc
     unless you use {!Pretty.leftflush} right after this. *)
 val line         : doc
 
-(** Use after a {!Pretty.line} to prevent the indentation. Whatever follows
+(** Use after a {!Pretty.line} to prevent the indentation. Whatever follows 
  * next will be flushed left. Indentation resumes on the next line. *)
 val leftflush    : doc
 
@@ -119,7 +119,7 @@ val align: doc
 val unalign: doc
 
 
-(** Mark the beginning of a markup section. The width of a markup section is
+(** Mark the beginning of a markup section. The width of a markup section is 
  * considered 0 for the purpose of computing identation *)
 val mark: doc
 
@@ -133,22 +133,22 @@ val unmark: doc
     with the specified number of spaces. *)
 val indent: int -> doc -> doc
 
-(** Prints a document as markup. The marked document cannot contain line
+(** Prints a document as markup. The marked document cannot contain line 
  * breaks or alignment constructs. *)
 val markup: doc -> doc
 
-(** Formats a sequence. [sep] is a separator, [doit] is a function that
+(** Formats a sequence. [sep] is a separator, [doit] is a function that 
  * converts an element to a document. *)
 val seq: sep:doc -> doit:('a ->doc) -> elements:'a list -> doc
 
 
-(** An alternative function for printing a list. The [unit] argument is there
- * to make this function more easily usable with the {!Pretty.dprintf}
+(** An alternative function for printing a list. The [unit] argument is there 
+ * to make this function more easily usable with the {!Pretty.dprintf} 
  * interface. The first argument is a separator, by default a comma. *)
 val docList: ?sep:doc -> ('a -> doc) -> unit -> 'a list -> doc
 
 (** sm: Yet another list printer.  This one accepts the same kind of
-  * printing function that {!Pretty.dprintf} does, and itself works
+  * printing function that {!Pretty.dprintf} does, and itself works 
   * in the dprintf context.  Also accepts
   * a string as the separator since that's by far the most common.  *)
 val d_list: string -> (unit -> 'a -> doc) -> unit -> 'a list -> doc
@@ -191,7 +191,7 @@ sig
 
 (** Format sets. *)
 module MakeSetPrinter :
-  functor (Set: sig
+  functor (Set: sig 
                   type elt
                   type t
                   val fold : (elt -> 'a -> 'a) -> t -> 'a -> 'a
@@ -211,54 +211,54 @@ end
 (** A function that is useful with the [printf]-like interface *)
 val insert: unit -> doc -> doc
 
-val dprintf: ('a, unit, doc, doc) format4 -> 'a
-(** This function provides an alternative method for constructing
-    [doc] objects. The first argument for this function is a format string
-    argument (of type [('a, unit, doc) format]; if you insist on
-    understanding what that means see the module [Printf]). The format string
-    is like that for the [printf] function in C, except that it understands a
-    few more formatting controls, all starting with the @ character.
+val dprintf: ('a, unit, doc, doc) format4 -> 'a  
+(** This function provides an alternative method for constructing 
+    [doc] objects. The first argument for this function is a format string 
+    argument (of type [('a, unit, doc) format]; if you insist on 
+    understanding what that means see the module [Printf]). The format string 
+    is like that for the [printf] function in C, except that it understands a 
+    few more formatting controls, all starting with the @ character. 
 
-    See the gprintf function if you want to pipe the result of dprintf into
+    See the gprintf function if you want to pipe the result of dprintf into 
     some other functions.
 
- The following special formatting characters are understood (these do not
+ The following special formatting characters are understood (these do not 
  correspond to arguments of the function):
--  @\[ Inserts an {!Pretty.align}. Every format string must have matching
-        {!Pretty.align} and {!Pretty.unalign}.
+-  @\[ Inserts an {!Pretty.align}. Every format string must have matching 
+        {!Pretty.align} and {!Pretty.unalign}. 
 -  @\] Inserts an {!Pretty.unalign}.
 -  @!  Inserts a {!Pretty.line}. Just like "\n"
 -  @?  Inserts a {!Pretty.break}.
--  @<  Inserts a {!Pretty.mark}.
+-  @<  Inserts a {!Pretty.mark}. 
 -  @>  Inserts a {!Pretty.unmark}.
 -  @^  Inserts a {!Pretty.leftflush}
        Should be used immediately after @! or "\n".
 -  @@ : inserts a @ character
 
- In addition to the usual [printf] % formatting characters the following two
+ In addition to the usual [printf] % formatting characters the following two 
  new characters are supported:
-- %t Corresponds to an argument of type [unit -> doc]. This argument is
+- %t Corresponds to an argument of type [unit -> doc]. This argument is 
      invoked to produce a document
-- %a Corresponds to {b two} arguments. The first of type [unit -> 'a -> doc]
-     and the second of type ['a]. (The extra [unit] is do to the
-     peculiarities of the built-in support for format strings in Ocaml. It
-     turns out that it is not a major problem.) Here is an example of how
+- %a Corresponds to {b two} arguments. The first of type [unit -> 'a -> doc] 
+     and the second of type ['a]. (The extra [unit] is do to the 
+     peculiarities of the built-in support for format strings in Ocaml. It 
+     turns out that it is not a major problem.) Here is an example of how 
      you use this:
 
 {v dprintf "Name=%s, SSN=%7d, Children=\@\[%a\@\]\n"
              pers.name pers.ssn (docList (chr ',' ++ break) text)
              pers.children v}
 
- The result of [dprintf] is a {!Pretty.doc}. You can format the document and
+ The result of [dprintf] is a {!Pretty.doc}. You can format the document and 
  emit it using the functions {!Pretty.fprint} and {!Pretty.sprint}.
 
 *)
 
-(** Like {!Pretty.dprintf} but more general. It also takes a function that is
- * invoked on the constructed document but before any formatting is done. The
- * type of the format argument means that 'a is the type of the parameters of
- * this function, unit is the type of the first argument to %a and %t
- * formats, doc is the type of the intermediate result, and 'b is the type of
+(** Like {!Pretty.dprintf} but more general. It also takes a function that is 
+ * invoked on the constructed document but before any formatting is done. The 
+ * type of the format argument means that 'a is the type of the parameters of 
+ * this function, unit is the type of the first argument to %a and %t 
+ * formats, doc is the type of the intermediate result, and 'b is the type of 
  * the result of gprintf. *)
 val gprintf: (doc -> 'b) -> ('a, unit, doc, 'b) format4 -> 'a
 
@@ -269,15 +269,15 @@ val fprint: out_channel -> width:int -> doc -> unit
 val sprint: width:int -> doc -> string
 
 (** Like {!Pretty.dprintf} followed by {!Pretty.fprint} *)
-val fprintf: out_channel -> ('a, unit, doc) format -> 'a
+val fprintf: out_channel -> ('a, unit, doc) format -> 'a  
 
 (** Like {!Pretty.fprintf} applied to [stdout] *)
-val printf: ('a, unit, doc) format -> 'a
+val printf: ('a, unit, doc) format -> 'a 
 
 (** Like {!Pretty.fprintf} applied to [stderr] *)
-val eprintf: ('a, unit, doc) format -> 'a
+val eprintf: ('a, unit, doc) format -> 'a 
 
-
+                                                                     
 (* sm: arg!  why can't I write this function?! *)
 (* * Like {!Pretty.dprintf} but yielding a string with no newlines *)
 (*val sprintf: (doc, unit, doc) format -> string*)
@@ -292,27 +292,30 @@ val withPrintDepth : int -> (unit -> unit) -> unit
 
 (** The following variables can be used to control the operation of the printer *)
 
-(** Specifies the nesting depth of the [align]/[unalign] pairs at which
+(** Specifies the nesting depth of the [align]/[unalign] pairs at which 
     everything is replaced with ellipsis *)
 val printDepth   : int ref
 
 val printIndent  : bool ref  (** If false then does not indent *)
 
 
-(** If set to [true] then optional breaks are taken only when the document
-    has exceeded the given width. This means that the printout will looked
+(** If set to [true] then optional breaks are taken only when the document 
+    has exceeded the given width. This means that the printout will looked 
     more ragged but it will be faster *)
-val fastMode  : bool ref
+val fastMode  : bool ref 
 
 val flushOften   : bool ref  (** If true the it flushes after every print *)
 
+(** Whether to rebalance doc before printing it to avoid stack-overflows *)
+val flattenBeforePrint : bool ref
 
-(** Keep a running count of the taken newlines. You can read and write this
+
+(** Keep a running count of the taken newlines. You can read and write this 
   * from the client code if you want *)
 val countNewLines : int ref
 
 
-(** A function that when used at top-level in a module will direct
- * the pa_prtype module generate automatically the printing functions for a
+(** A function that when used at top-level in a module will direct 
+ * the pa_prtype module generate automatically the printing functions for a 
  * type *)
 val auto_printer: string -> 'b

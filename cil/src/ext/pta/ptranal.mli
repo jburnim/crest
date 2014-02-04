@@ -1,9 +1,9 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  John Kodumal        <jkodumal@eecs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -63,10 +63,10 @@ val analyze_mono : bool ref
 val no_sub : bool ref
 
 (** Make the flow step a no-op *)
-val no_flow : bool ref
+val no_flow : bool ref 
 
 (** Show the progress of the flow step *)
-val show_progress : bool ref
+val show_progress : bool ref 
 
 (** Treat undefined functions conservatively *)
 val conservative_undefineds : bool ref
@@ -93,7 +93,7 @@ val print_types : unit -> unit
 (*                                                                     *)
 (***********************************************************************)
 
-(** If undefined functions are analyzed conservatively, any of the
+(** If undefined functions are analyzed conservatively, any of the 
   high-level queries may raise this exception *)
 exception UnknownLocation
 
@@ -112,7 +112,7 @@ val resolve_funptr : Cil.exp -> (Cil.fundec list)
 (***********************************************************************)
 
 (** type for abstract locations *)
-type absloc
+type absloc 
 
 (** Give an abstract location for a varinfo *)
 val absloc_of_varinfo : Cil.varinfo -> absloc
@@ -124,7 +124,7 @@ val absloc_of_lval : Cil.lval -> absloc
 val absloc_eq : absloc -> absloc -> bool
 
 val absloc_e_points_to  : Cil.exp -> absloc list
-val absloc_e_transitive_points_to : Cil.exp -> absloc list
+val absloc_e_transitive_points_to : Cil.exp -> absloc list 
 
 val absloc_lval_aliases : Cil.lval -> absloc list
 

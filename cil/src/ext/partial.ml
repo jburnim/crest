@@ -13,6 +13,7 @@
  * (More assumptions in the comments below)
  *****************************************************************************)
 open Cil
+open Cilint
 open Pretty
 
 (*****************************************************************************
@@ -149,7 +150,7 @@ struct
       let n1 = cgFindNode cg caller in
       let n2 = cgFindNode cg callee in
         n1.calls <- n2.fd :: n1.calls;
-        n1.calledBy <- n1.fd :: n1.calledBy
+        n2.calledBy <- n1.fd :: n2.calledBy
     with _ -> ()
 
   class callGraphVisitor cg =
@@ -418,7 +419,7 @@ object
         Instr il when contains_call il ->
           begin
             let list_of_stmts =
-              List.map (fun one_inst -> mkStmtOneInstr one_inst) il in
+              Util.list_map (fun one_inst -> mkStmtOneInstr one_inst) il in
             let block = mkBlock list_of_stmts in
               ChangeDoChildrenPost
                 (s, (fun _ -> s.skind <- Block block; s))
@@ -602,7 +603,7 @@ struct
             Instr il ->
               let state = ref state in
               let new_il =
-                List.map
+                Util.list_map
                   (fun i ->
                      if debug then
                        ignore (Pretty.printf "Instr %a@!" d_instr i);
@@ -642,7 +643,7 @@ struct
                                              [Call (lo, Lval (Var vi, NoOffset), al', loc)], false
                              with e ->
                                let state'' = S.call_to_unknown_function !state in
-                               let al' = List.map (S.evaluate !state) al in
+                               let al' = Util.list_map (S.evaluate !state) al in
                                  state := state'';
                                  [Call (lo, Lval (Var vi, NoOffset), al', loc)], false
                            in
@@ -655,7 +656,7 @@ struct
                              end;
                              result
                        | Call (lo, f, al, loc) ->
-                           let al' = List.map (S.evaluate !state) al in
+                           let al' = Util.list_map (S.evaluate !state) al in
                              state := S.call_to_unknown_function !state;
                              begin
                                match lo with
@@ -685,7 +686,7 @@ struct
                       let y = stmt_fun a x in
                         match x.skind with
                             Instr _
-                          | Return _ | Goto _ | Break _ | Continue _ -> y
+                          | Return _ | Goto _ | ComputedGoto _ | Break _ | Continue _ -> y
                           | If (_expr, then_block, else_block, _loc) ->
                               visit_block
                                 stmt_fun
@@ -708,6 +709,10 @@ struct
                 and gather_gotos acc stmt =
                   match stmt.skind with
                       Goto (stmt_ref, _loc) -> gather_labels acc !stmt_ref
+                    | ComputedGoto _ ->
+                            (* Assume that CFG fills successors correctly *)
+                            List.fold_left (fun a s -> gather_labels a s)
+                                acc stmt.succs
                     | _ -> acc
                 and transitive_closure ini_stmt =
                   let rec iter trace acc stmt =
@@ -726,6 +731,10 @@ struct
                     (fun a x ->
                       match x.skind with
                           Goto (stmt_ref, _loc) -> gather_labels a !stmt_ref
+                        | ComputedGoto _ ->
+                            (* Assume that CFG fills successors correctly *)
+                            List.fold_left (fun a s -> gather_labels a s)
+                                a x.succs
                         | Block block -> visit_block gather_gotos a block
                         | _ -> a)
                     LabelSet.empty
@@ -754,8 +763,8 @@ struct
               and is_false e = isZero e
               (* logical truth in C expressed in cilly's terms *)
               and is_true e =
-                match isInteger e with
-                    Some x -> x <> Int64.zero
+                match getInteger e with
+                    Some x -> not (is_zero_cilint x)
                   | None -> false in
               (* evaluate expression and eliminate branches *)
               let e' = S.evaluate state e in

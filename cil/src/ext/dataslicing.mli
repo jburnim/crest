@@ -1,10 +1,10 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  Jeremy Condit       <jcondit@cs.berkeley.edu>
  *  George C. Necula    <necula@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:

@@ -1,9 +1,9 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  John Kodumal        <jkodumal@eecs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -69,12 +69,12 @@ val return : tau -> tau -> unit
 val make_fresh : string -> tau
 val points_to_names : lvalue -> string list
 val points_to : lvalue -> Cil.varinfo list
-val epoints_to : tau -> Cil.varinfo list
+val epoints_to : tau -> Cil.varinfo list   
 val string_of_lvalue : lvalue -> string
 val may_alias : tau -> tau -> bool
 
 val absloc_points_to : lvalue -> absloc list
 val absloc_epoints_to : tau -> absloc list
-val absloc_of_lvalue : lvalue -> absloc
+val absloc_of_lvalue : lvalue -> absloc 
 val absloc_eq : (absloc * absloc) -> bool
 val d_absloc : unit -> absloc -> Pretty.doc

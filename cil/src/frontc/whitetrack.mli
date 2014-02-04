@@ -1,6 +1,6 @@
 
 (* wrapped version of the lexer that remembers all its tokens *)
-val wraplexer : (Lexing.lexbuf -> (string * string * 'a * Cabs.cabsloc))
+val wraplexer : (Lexing.lexbuf -> (string * string * 'a * Cabs.cabsloc)) 
                     -> Lexing.lexbuf -> 'a
 val setFinalWhite : string -> unit
 
@@ -17,6 +17,7 @@ val setLoc : Cabs.cabsloc -> unit
 
 (* where we write the file to *)
 val setOutput : out_channel -> unit
+val getOutput : unit -> out_channel
 
 (* is whitespace tracking enabled *)
 val enabled : bool ref

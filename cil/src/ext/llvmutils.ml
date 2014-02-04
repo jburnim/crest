@@ -1,9 +1,9 @@
-(* Copyright (c) 2008 Intel Corporation
- * All rights reserved.
+(* Copyright (c) 2008 Intel Corporation 
+ * All rights reserved. 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 	Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  * 	Redistributions in binary form must reproduce the above copyright
@@ -12,7 +12,7 @@
  *     Neither the name of the Intel Corporation nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -27,7 +27,7 @@
  *)
 
 (* General utility functions for the LLVM code generation (some of these are
-   more generally useful)
+   more generally useful) 
 *)
 open Cil
 open Pretty
@@ -39,17 +39,17 @@ exception Bug
 (* A few useful predicate / accessor functions - the accessor functions raise Bug
    when the argument isn't as expected *)
 
-let getOption (v:'a option) : 'a =
+let getOption (v:'a option) : 'a = 
   match v with
   | Some x -> x
   | None -> raise Bug
 
 (* Type predicates *)
-let isFloatingType t =
+let isFloatingType t = 
   match unrollType t with
   | TFloat _ -> true
   | _ -> false
-let isSignedType t =
+let isSignedType t = 
   match unrollType t with
   | TInt (ik, _) -> isSigned ik
   | _ -> false
@@ -62,34 +62,34 @@ let isCompType (t:typ) =
   | TComp _ -> true
   | _ -> false
 
-let defaultPromotion (t:typ) : typ option =
+let defaultPromotion (t:typ) : typ option = 
   match unrollType t with
   | TFloat (FFloat, _) -> Some doubleType
   | TInt (ik, _) when bytesSizeOfInt ik < bytesSizeOfInt IInt -> Some intType
   | _ -> None
 
 (* Extract information from types *)
-let integralKind (t:typ) : ikind =
+let integralKind (t:typ) : ikind = 
   match unrollType t with
-  | TInt (ik, _) -> ik
+  | TInt (ik, _) -> ik 
   | TEnum _ -> IInt
   | _ -> IInt
-let typeArrayOf (t:typ) : typ =
+let typeArrayOf (t:typ) : typ = 
   match unrollType t with
   | TArray (t, _, _) -> t
   | _ -> raise Bug
-let typePointsTo (t:typ) : typ =
+let typePointsTo (t:typ) : typ = 
   match unrollType t with
   | TPtr (t, _) -> t
   | _ -> raise Bug
 
-let typeOfLhost (h:lhost) =
+let typeOfLhost (h:lhost) = 
   match h with
   | Var vi -> vi.vtype
   | Mem e -> typePointsTo (typeOf e)
 
 (* The index of field fi within its structure *)
-let fieldIndexOf (fi:fieldinfo) : int =
+let fieldIndexOf (fi:fieldinfo) : int = 
   let rec indexLoop fields n = match fields with
   | [] -> raise Bug
   | fi' :: _ when fi' == fi -> n
@@ -97,8 +97,8 @@ let fieldIndexOf (fi:fieldinfo) : int =
   in indexLoop fi.fcomp.cfields 0
 
 (* Reduce a constant expression to its integer value - fail if it isn't possible *)
-let intConstValue (e:exp) : int64 =
-  match constFold true e with
+let intConstValue (e:exp) : int64 = 
+  match constFold true e with 
   | Const(CInt64(n,_,_)) -> n
   | _ -> raise Bug
 
@@ -111,10 +111,10 @@ let mkAddrOfExp (e:exp) : exp =
 (* Convert a CIL function signature to an LLVM type signature (as a doc string).
    'name' is the function name if any; use 'name = nil' to generate a function-type
    doc string. *)
-let rec gSig (name:doc) (ret, oargs, isva, a) : doc =
+let rec gSig (name:doc) (ret, oargs, isva, a) : doc = 
   let args = argsToList oargs in
-  let parg (argname, t, _) =
-    let namedoc () =
+  let parg (argname, t, _) = 
+    let namedoc () = 
       (* don't print argument names in function-type doc strings *)
       if name <> nil && argname <> "" then (text " %") ++ (text argname) else nil
     in
@@ -124,7 +124,7 @@ let rec gSig (name:doc) (ret, oargs, isva, a) : doc =
     else
       dprintf "%a%t" dgType t namedoc
   in
-  let varargs () = if isva then text ", ..." else
+  let varargs () = if isva then text ", ..." else 
    match oargs with
    | Some _ -> nil
    | None -> text "..." in
@@ -143,12 +143,12 @@ and gType (t:typ) : doc = match t with
 | TFloat (FFloat, _) -> text "float"
 | TFloat (FDouble, _) -> text "double"
 | TFloat (FLongDouble, _) -> text "fp128"
-| TPtr (t, _) ->
+| TPtr (t, _) -> 
     (* LLVM uses "i8 *" for 'void *' *)
     if isVoidType t then text "i8 *"
     else (gType t) ++ (text " *")
 | TArray (t, None, _) -> (text "[ 0 x ") ++ (gType t) ++ (text "]")
-| TArray (t, size, _) ->
+| TArray (t, size, _) -> 
     let asize = try lenOfArray size with LenOfArray -> 0 in
     dprintf "[ %d x %a ]" asize dgType t
 | TFun (a, b, c, d) -> gSig nil (a, b, c, d)
@@ -161,8 +161,9 @@ and gType (t:typ) : doc = match t with
 and dgType () = gType
 
 (* Generate an LLVM function header for function 'f' (as a doc string) *)
-let gFunctionSig (fi:varinfo) : doc =
+let gFunctionSig (fi:varinfo) : doc = 
   gSig ((text "@") ++ (text fi.vname)) (splitFunctionType fi.vtype)
 (* Generate an LLVM function header for function 'f' (as a doc string), for use
    with dprintf's %a *)
 let dgFunctionSig () = gFunctionSig
+

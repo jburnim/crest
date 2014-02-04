@@ -1,11 +1,11 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -35,7 +35,7 @@
  *
  *)
 
-(* This module inserts code to check for stack overflow. It saves the address
+(* This module inserts code to check for stack overflow. It saves the address 
  * of the top of the stack in "main" and then it picks one function *)
 
 val addCheck: Cil.file -> unit

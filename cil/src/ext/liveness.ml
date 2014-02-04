@@ -41,7 +41,7 @@ let live_func = ref ""
 module VS = UD.VS
 
 let debug_print () vs = (VS.fold
-    (fun vi d ->
+    (fun vi d -> 
       d ++ text "name: " ++ text vi.vname
 	++ text " id: " ++ num vi.vid ++ text " ")
     vs nil) ++ line
@@ -63,7 +63,7 @@ module LiveFlow = struct
   let pretty () vs =
     let fn = !printer in
     fn () vs
-
+    
   let stmtStartData = IH.create 32
 
   let funcExitData = VS.empty
@@ -134,7 +134,7 @@ let getLiveSet sid =
 
 let getLiveness (s:stmt) = Inthash.find LiveFlow.stmtStartData s.sid
 
-let getPostLiveness (s:stmt) : LiveFlow.t =
+let getPostLiveness (s:stmt) : LiveFlow.t = 
   let foldLiveness live s = VS.union live (getLiveness s) in
   List.fold_left foldLiveness VS.empty s.succs
 
@@ -231,7 +231,7 @@ class deadnessVisitorClass = object(self)
         | Some vs -> begin
             let (dead,live) =
                 List.fold_left (fun (dead,live) stm ->
-                    let dvs =
+                    let dvs = 
                         (* things can die in non instr statemnts *)
                         match stm.skind with
                         | Instr _
@@ -281,8 +281,8 @@ class deadnessVisitorClass = object(self)
 end
 
 let print_everything () =
-  let d = IH.fold (fun i vs d ->
-    d ++ num i ++ text ": " ++ LiveFlow.pretty () vs)
+  let d = IH.fold (fun i vs d -> 
+    d ++ num i ++ text ": " ++ LiveFlow.pretty () vs) 
       LiveFlow.stmtStartData nil in
   ignore(printf "%t" (fun () -> d))
 
@@ -296,7 +296,7 @@ class doFeatureClass = object(self)
   inherit nopCilVisitor
 
   method vfunc fd =
-    if String.compare fd.svar.vname (!live_func) = 0 then
+    if String.compare fd.svar.vname (!live_func) = 0 then 
       (Cfg.clearCFGinfo fd;
        ignore(Cfg.cfgFun fd);
        computeLiveness fd;
@@ -313,10 +313,10 @@ class doFeatureClass = object(self)
       (printer := min_print;
        ignore(printf "%a" LiveFlow.pretty vs);
        SkipChildren)
-    with Not_found ->
+    with Not_found -> 
       if !debug then ignore(E.log "Liveness: stmt: %d not found\n" s.sid);
       DoChildren
-    else
+    else 
       (if List.length s.labels = 0 then
 	if !debug then ignore(E.log "Liveness: no label at sid=%d\n" s.sid);
       DoChildren)

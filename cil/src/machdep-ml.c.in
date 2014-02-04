@@ -1,11 +1,11 @@
 /*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
   int env = argc == 2 && !strcmp(argv[1], "--env");
   int alignof_short, alignof_int, alignof_long, alignof_ptr, alignof_enum,
     alignof_float, alignof_double, alignof_longdouble, sizeof_fun,
-    alignof_fun, alignof_str, alignof_aligned, alignof_longlong,
+    alignof_fun, alignof_str, alignof_aligned, alignof_longlong, 
     little_endian, char_is_unsigned, alignof_bool;
 
   // The alignment of a short
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
     };
     alignof_int = (int)(&((struct intstruct*)0)->i);
   }
-
+  
   // The alignment of a bool
   {
     struct boolstruct {
@@ -123,7 +123,7 @@ int main(int argc, char **argv)
     };
     alignof_bool = (int)(&((struct boolstruct*)0)->b);
   }
-
+  
   // The alignment of a long
   {
     struct longstruct {
@@ -132,7 +132,7 @@ int main(int argc, char **argv)
     };
     alignof_long = (int)(&((struct longstruct*)0)->l);
   }
-
+    
   // The alignment of long long
   {
     struct longlong {
@@ -145,7 +145,7 @@ int main(int argc, char **argv)
   // The alignment of a ptr
   {
     struct ptrstruct {
-      char c;
+      char c; 
       int * p;
     };
     alignof_ptr = (int)(&((struct ptrstruct*)0)->p);
@@ -154,12 +154,12 @@ int main(int argc, char **argv)
   // The alignment of an enum
   {
     struct enumstruct {
-      char c;
+      char c; 
       enum e2 { THREE, FOUR, FIVE } e;
     };
     alignof_enum = (int)(&((struct enumstruct*)0)->e);
   }
-
+    
   // The alignment of a float
   {
     struct floatstruct {
@@ -168,7 +168,7 @@ int main(int argc, char **argv)
     };
     alignof_float = (int)(&((struct floatstruct*)0)->f);
   }
-
+  
   // The alignment of double
   {
     struct s1 {
@@ -176,7 +176,7 @@ int main(int argc, char **argv)
       double d;
     };
     alignof_double = (int)(&((struct s1*)0)->d);
-  }
+  }    
 
   // The alignment of long  double
   {
@@ -185,8 +185,8 @@ int main(int argc, char **argv)
       long double ld;
     };
     alignof_longdouble = (int)(&((struct s1*)0)->ld);
-  }
-
+  }    
+    
   alignof_str = __alignof("a string");
   alignof_fun = __alignof(main);
 
@@ -223,20 +223,20 @@ int main(int argc, char **argv)
     {
       fprintf(stderr, "Generating CIL_MACHINE machine dependency information string (for CIL)\n");
       printf("short=%d,%d int=%d,%d long=%d,%d long_long=%d,%d pointer=%d,%d "
-	     "enum=%d,%d float=%d,%d double=%d,%d long_double=%d,%d void=%d "
+	     "alignof_enum=%d float=%d,%d double=%d,%d long_double=%d,%d void=%d "
 	     "bool=%d,%d fun=%d,%d alignof_string=%d max_alignment=%d size_t=%s "
 	     "wchar_t=%s char_signed=%s const_string_literals=%s "
 	     "big_endian=%s __thread_is_keyword=%s __builtin_va_list=%s "
 	     "underscore_name=%s\n",
 	     (int)sizeof(short), alignof_short, (int)sizeof(int), alignof_int,
-	     (int)sizeof(long), alignof_long, (int)sizeof(long long), alignof_longlong,
-	     (int)sizeof(int *), alignof_ptr, (int)sizeof(enum e { ONE, TWO }), alignof_enum,
-	     (int)sizeof(float), alignof_float, (int)sizeof(double), alignof_double,
-	     (int)sizeof(long double), alignof_longdouble, (int)sizeof(void),
-	     sizeof(bool), alignof_bool,
-	     sizeof_fun, alignof_fun, alignof_str, alignof_aligned,
-	     underscore(TYPE_SIZE_T), underscore(TYPE_WCHAR_T),
-	     char_is_unsigned ? "false" : "true", CONST_STRING_LITERALS,
+	     (int)sizeof(long), alignof_long, (int)sizeof(long long), alignof_longlong, 
+	     (int)sizeof(int *), alignof_ptr, alignof_enum,
+	     (int)sizeof(float), alignof_float, (int)sizeof(double), alignof_double, 
+	     (int)sizeof(long double), alignof_longdouble, (int)sizeof(void), 
+	     (int)sizeof(bool), alignof_bool,
+	     sizeof_fun, alignof_fun, alignof_str, alignof_aligned, 
+	     underscore(TYPE_SIZE_T), underscore(TYPE_WCHAR_T), 
+	     char_is_unsigned ? "false" : "true", CONST_STRING_LITERALS, 
 	     little_endian ? "false" : "true",
 	     THREAD_IS_KEYWORD, HAVE_BUILTIN_VA_LIST, UNDERSCORE_NAME);
     }
@@ -256,7 +256,6 @@ int main(int argc, char **argv)
       printf("\t sizeof_long           = %d;\n", (int)sizeof(long));
       printf("\t sizeof_longlong       = %d;\n", (int)sizeof(LONGLONG));
       printf("\t sizeof_ptr            = %d;\n", (int)sizeof(int *));
-      printf("\t sizeof_enum           = %d;\n", (int)sizeof(enum e { ONE, TWO }));
       printf("\t sizeof_float          = %d;\n", (int)sizeof(float));
       printf("\t sizeof_double         = %d;\n", (int)sizeof(double));
       printf("\t sizeof_longdouble     = %d;\n", (int)sizeof(long double));
@@ -285,4 +284,4 @@ int main(int argc, char **argv)
       printf("\t little_endian         = %s;\n", little_endian ? "true" : "false");
     }
   return 0;
-}
+} 

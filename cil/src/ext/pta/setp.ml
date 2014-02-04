@@ -1,9 +1,9 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  John Kodumal        <jkodumal@eecs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -45,7 +45,7 @@
 (*                                                                     *)
 (***********************************************************************)
 
-(* $Id: setp.ml 3691 2003-02-19 19:26:31Z jkodumal $ *)
+(* $Id$ *)
 
 (* Sets over ordered types *)
 

@@ -12,7 +12,7 @@
  * Also assumes that there has been a pointer analysis after
  * the simplemem transformation, the results for which
  * can be accessed through the Ptranal module.
- *
+ * 
  * Further assumes that each function has only one return
  * of the form "return r" where r is a variable.
  *)
@@ -53,13 +53,13 @@ let instrHasNoSideEffects = ref (fun (i:instr) -> false)
 let getPredsFromInstr = ref (fun (i:instr) -> [])
 
 
-module ExpIntHash =
+module ExpIntHash = 
   H.Make(struct
     type t = exp
     let equal e1 e2 = compareExpStripCasts e1 e2
     let hash = H.hash
   end)
-
+  
 
 module type TRANSLATOR =
   sig
@@ -103,7 +103,7 @@ module type TRANSLATOR =
 
   end
 
-module NullTranslator : TRANSLATOR =
+module NullTranslator : TRANSLATOR = 
   struct
     type exp = int
     type unop = int -> int
@@ -200,13 +200,18 @@ module Solver = functor(T:TRANSLATOR) ->
       | Lval(Var vi,NoOffset) when vi.vname = "_ZERO_" ->
 	  T.mkConst 0
       | Lval l -> T.mkVar (sprint 80 (d_lval () l))
-      | UnOp(op,e,_) ->
+      | UnOp(op,e,_) -> 
 	  let e = transExp e in
 	  transUnOp op e
       | BinOp(op,e1,e2,_) ->
 	  let e1 = transExp e1 in
 	  let e2 = transExp e2 in
 	  transBinOp op e1 e2
+      | Question (e1,e2,e3,_) ->
+	  let e1 = transExp e1 in
+	  let e2 = transExp e2 in
+	  let e3 = transExp e3 in
+	  T.mkIte e1 e2 e3
       | SizeOf typ -> T.mkConst ((bitsSizeOf typ)/8)
       | SizeOfE e -> transExp (SizeOf(typeOf e))
       | SizeOfStr s -> T.mkConst (1 + String.length s)
@@ -216,6 +221,8 @@ module Solver = functor(T:TRANSLATOR) ->
       (* Cast should check if signed type, and if so, make an ite term *)
       | AddrOf lv -> T.mkVar (sprint 80 (d_exp () e))
       | StartOf lv -> T.mkVar (sprint 80 (d_exp () e))
+      | AddrOfLabel _ ->
+      raise (E.s "Address of label not supported in Predabst\n") (* XXX *)
 
     let isValid e1 e2 =
       let e_imp = T.mkImp e1 e2 in
@@ -269,7 +276,7 @@ module PredAbst = functor(S:SOLVER) ->
     (* A list of mappings from predicate id to an element of the
      * boolean lattice for a list of instructions, or just one
      * such mapping for any other statement. *)
-    type stmtState =
+    type stmtState = 
       | ILState of (boolLat IH.t) list
       | StmState of boolLat IH.t
 
@@ -299,7 +306,7 @@ module PredAbst = functor(S:SOLVER) ->
 
     class returnFinderClass vor = object(self)
       inherit nopCilVisitor
-
+	  
       method vstmt s = match s.skind with
       | Return(Some(Lval(Var vi,NoOffset)),_) -> begin
 	  vor := Some(vi);
@@ -316,8 +323,8 @@ module PredAbst = functor(S:SOLVER) ->
 
     class viFinderClass vi br = object(self)
       inherit nopCilVisitor
-
-      method vvrbl vi' =
+      
+      method vvrbl vi' = 
 	if vi.vid = vi'.vid
 	then (br := true; SkipChildren)
 	else DoChildren
@@ -392,24 +399,24 @@ module PredAbst = functor(S:SOLVER) ->
 	                (preds   : exp list)
 	                (fpreds  : exp list)
 	=
-      let localsNoRet =
+      let localsNoRet = 
 	match ret with
 	| Some ret ->
-	    List.filter
-	      (fun vi -> not(vi.vid = ret.vid))
-	      locals
+	    List.filter 
+	      (fun vi -> not(vi.vid = ret.vid)) 
+	      locals 
 	| None -> locals
       in
       let retPreds = makeFormalPreds localsNoRet preds in
-      let retPreds =
+      let retPreds = 
 	match ret with
 	| Some ret ->
-	    List.filter
-	      (fun e -> not(expContainsVi e ret))
-	      retPreds
+	    List.filter 
+	      (fun e -> not(expContainsVi e ret)) 
+	      retPreds 
 	| None -> retPreds
       in
-      let retPreds' = List.filter
+      let retPreds' = List.filter 
 	  (fun e -> (expContainsGlobal e) ||
 	  (List.exists (expContainsDeref e) formals))
 	  fpreds in
@@ -426,7 +433,7 @@ module PredAbst = functor(S:SOLVER) ->
 	let ret = findReturn fd in
 	let preds = !collectPredicates fd in
 	let formalPreds = makeFormalPreds locals preds in
-	let returnPreds = makeReturnPreds ret locals formals
+	let returnPreds = makeReturnPreds ret locals formals 
 	    preds formalPreds in
 	let fs = { fsFormals  = formals;
 		   fsReturn   = ret;
@@ -466,7 +473,7 @@ module PredAbst = functor(S:SOLVER) ->
       h'
 
     let hl_combine hl1 hl2 =
-      List.map
+      Util.list_map 
 	(fun (h1, h2) -> h_combine h1 h2)
 	(List.combine hl1 hl2)
 
@@ -499,17 +506,17 @@ module PredAbst = functor(S:SOLVER) ->
 	    let pl2 = helper e2 in
 	    (* for every pair of things from pl1 and pl2 *)
 	    List.fold_left (fun l (c1,e1) ->
-	      l @ (List.map (fun (c2,e2) ->
+	      l @ (Util.list_map (fun (c2,e2) ->
 		(BinOp(LAnd,c1,c2,intType),BinOp(op,e1,e2,t))) pl2))
 	      [] pl1
 	| UnOp(op, e, t) ->
 	    let pl = helper e in
-	    List.map (fun (c,e) ->
+	    Util.list_map (fun (c,e) ->
 	      (c,UnOp(op,e,t)))
 	      pl
 	| CastE(t, e) ->
 	    let pl = helper e in
-	    List.map (fun (c,e) ->
+	    Util.list_map (fun (c,e) ->
 	      (c,CastE(t,e)))
 	      pl
 	| _ -> raise (E.s "Simplify has not been run\n")
@@ -520,17 +527,17 @@ module PredAbst = functor(S:SOLVER) ->
 	  zero pl
       in
       let rec cleanUpExp e = match e with
-      | BinOp(LAnd,e1,e2,_) when compareExp (cleanUpExp e1) one ->
+      | BinOp(LAnd,e1,e2,_) when compareExp (cleanUpExp e1) one -> 
 	  cleanUpExp e2
-      | BinOp(LAnd,e1,e2,_) when compareExp (cleanUpExp e2) one ->
+      | BinOp(LAnd,e1,e2,_) when compareExp (cleanUpExp e2) one -> 
 	  cleanUpExp e1
-      | BinOp(LOr,e1,e2,_) when compareExp (cleanUpExp e1) zero ->
+      | BinOp(LOr,e1,e2,_) when compareExp (cleanUpExp e1) zero -> 
 	  cleanUpExp e2
-      | BinOp(LOr,e1,e2,_) when compareExp (cleanUpExp e2) zero ->
+      | BinOp(LOr,e1,e2,_) when compareExp (cleanUpExp e2) zero -> 
 	  cleanUpExp e1
-      | UnOp(LNot,e,_) when compareExp (cleanUpExp e) one ->
+      | UnOp(LNot,e,_) when compareExp (cleanUpExp e) one -> 
 	  zero
-      | UnOp(LNot,e,_) when compareExp (cleanUpExp e) zero ->
+      | UnOp(LNot,e,_) when compareExp (cleanUpExp e) zero -> 
 	  one
       | _ -> e
       in
@@ -538,7 +545,7 @@ module PredAbst = functor(S:SOLVER) ->
 
 
     (* computes WP(i,e) as Some(wp) *)
-    let weakestPrecondition (i : instr)
+    let weakestPrecondition (i : instr) 
 	                    (e : exp)
 	=
       match i with
@@ -578,29 +585,29 @@ module PredAbst = functor(S:SOLVER) ->
 	  | False -> BinOp(LAnd,pre,UnOp(LNot,getPred ctxt pid,intType),intType))
 	  inss one
       in
-      let pre =
+      let pre = 
 	List.fold_left (fun ce e ->
 	  BinOp(LAnd,ce,e,intType))
 	  pre extra
       in
       IH.iter (fun pid bl ->
 	let e = getPred ctxt pid in
-	let wp =
-	  if dowp then
+	let wp = 
+	  if dowp then 
 	    match io with
-	    | Some i -> begin
+	    | Some i -> begin 
 		match weakestPrecondition i e with
 		| Some wp -> wp
 		| None -> raise (E.s "given instr had no wp\n")
 	    end
 	    | None -> raise (E.s "No instruction for wp calc.\n")
-	  else
-	    e
+	  else 
+	    e 
 	in
 	let oldbl = try IH.find oldss pid with Not_found -> Bottom in
 	if S.isValid (S.transExp pre) (S.transExp wp) then
 	  IH.replace inss' pid (combineBoolLat True oldbl)
-	else if S.isValid (S.transExp pre) (S.transExp (UnOp(LNot,e,intType)))
+	else if S.isValid (S.transExp pre) (S.transExp (UnOp(LNot,e,intType))) 
 	then
 	  IH.replace inss' pid (combineBoolLat False oldbl)
 	else
@@ -630,10 +637,10 @@ module PredAbst = functor(S:SOLVER) ->
       | Call(lvo, Lval(Var vi, NoOffset), el, _) -> begin
 	  (* This function wasn't extern, so it has to be defined here *)
 	  let fsig = IH.find ctxt.cFuncSigs vi.vid in
-	  (* replace the formals in rpreds with the
+	  (* replace the formals in rpreds with the 
 	     expressions given as arguments *)
-	  let rpreds =
-	    List.map (fun e ->
+	  let rpreds = 
+	    Util.list_map (fun e ->
 	      List.fold_left2 (fun e vi ae ->
 		substitute ae (* for *) (Var vi, NoOffset) (* in *) e)
 		e fsig.fsFormals el)
@@ -642,9 +649,9 @@ module PredAbst = functor(S:SOLVER) ->
 	  let rpreds =
 	    match lvo, fsig.fsReturn with
 	    | None, None -> rpreds
-	    | Some lv, Some rvi ->
+	    | Some lv, Some rvi -> 
 		(* replace fsig.fsReturn in rpreds with Lval(lv) *)
-		List.map (fun e ->
+		Util.list_map (fun e ->
 		  substitute (Lval lv) (* for *) (Var rvi,NoOffset) (* in *) e)
 		  rpreds
 	    | _, _ -> raise (E.s "fsReturn is wrong in handleCallInstr\n")
@@ -679,11 +686,11 @@ module PredAbst = functor(S:SOLVER) ->
     let handleIl (ctxt : context)
                  (il   : instr list)
                  (ss   : stmtState)
-	=
+	= 
       match ss with
       | StmState _ -> raise (E.s "StmState for instruction list?\n")
       | ILState hl -> begin
-	  let newhl =
+	  let newhl = 
 	    List.fold_left (fun inss (i,oldss) ->
 	      (* if i is a Set:
 		 =>determine if inss => wp(i,e), if so, merge assertion of e
@@ -707,7 +714,7 @@ module PredAbst = functor(S:SOLVER) ->
 		  (* There are 2 cases:
 		     1. no side-effects: assert consequences of things in asserted
 		     2. side-effects: move predicates with globals or
-		        which contain dereferences of
+		        which contain dereferences of 
 		        aliases of pointer arguments to Top, assert
 		        consequences of things in asserted *)
 		  if !instrHasNoSideEffects i then
@@ -727,10 +734,10 @@ module PredAbst = functor(S:SOLVER) ->
 	  ILState(List.rev newhl)
       end
 
-    let handleStmt (ctxt : context)
+    let handleStmt (ctxt : context) 
                    (stm  : stmt)
                    (ss   : stmtState)
-	=
+	= 
       match stm.skind with
       | Instr il -> handleIl ctxt il ss
       | _ -> ss
@@ -742,10 +749,10 @@ module PredAbst = functor(S:SOLVER) ->
 	=
       (* go through each of the predicates and assert the
        * ones that are implied by the condition *)
-      let inss =
+      let inss = 
 	match ss with
 	| ILState hl -> List.hd hl
-	| StmState h -> h
+	| StmState h -> h 
       in
       StmState(buildPreAndTest ctxt inss (IH.create 16) [e] false None)
 
@@ -764,7 +771,7 @@ module PredAbst = functor(S:SOLVER) ->
 
 	let copy ss = match ss with
 	| ILState hl -> begin
-	    ILState(List.map (fun h -> IH.copy h) hl)
+	    ILState(Util.list_map (fun h -> IH.copy h) hl)
 	end
 	| StmState h -> StmState(IH.copy h)
 
@@ -784,13 +791,13 @@ module PredAbst = functor(S:SOLVER) ->
 	end
 
 	let computeFirstPredecessor stm ss =
-	  let h =
+	  let h = 
 	    match ss with
 	    | ILState hl -> List.hd (List.rev hl)
 	    | StmState h -> h
 	  in
 	  match stm.skind with
-	  | Instr il ->
+	  | Instr il -> 
 	      (* +1 so that we have the state *into* the first instruction
 		 at the head of the list *)
 	      ILState(listInit ((List.length il) + 1) h)
@@ -846,8 +853,8 @@ module PredAbst = functor(S:SOLVER) ->
 
     let analyze (fd : fundec) : unit =
       (* take the AllPreds out of the function signature and
-	 add them to the context *)
-	let fs =
+	 add them to the context *) 
+	let fs = 
 	  try IH.find currentContext.cFuncSigs fd.svar.vid
 	  with Not_found -> raise (E.s "run registerFile on file first\n")
 	in

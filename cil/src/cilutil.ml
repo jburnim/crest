@@ -1,11 +1,11 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -40,14 +40,14 @@ let doCheck= ref false   (* Whether to check CIL *)
 let strictChecking= ref false   (* If doCheck is true and warnings are found,
                                 * treat them as errors. *)
 
-let logCalls = ref false (* Whether to produce a log with all the function
+let logCalls = ref false (* Whether to produce a log with all the function 
                           * calls made *)
-let logWrites = ref false (* Whether to produce a log with all the mem
+let logWrites = ref false (* Whether to produce a log with all the mem 
                           * writes made *)
-let doPartial = ref false (* Whether to do partial evaluation and constant
-                          * folding *)
+let doPartial = ref false (* Whether to do partial evaluation and constant 
+                          * folding *)                          
 let doSimpleMem = ref false (* reduce complex memory expressions so that
-                          * they contain at most one lval *)
+                          * they contain at most one lval *) 
 let doOneRet = ref false (* make a functions have at most one 'return' *)
 let doStackGuard = ref false (* instrument function calls and returns to
 maintain a separate stack for return addresses *)
@@ -70,4 +70,3 @@ let doCxxPP = ref false
 let libDir = ref ""
 
 let dumpFCG = ref false
-let testcil = ref ""

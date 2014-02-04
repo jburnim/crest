@@ -1,11 +1,11 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -49,19 +49,19 @@ let keywords = H.create 211
 (*
 ** Useful primitives
 *)
-let scan_ident id =
+let scan_ident id = 
   try H.find keywords id
   with Not_found -> IDENT id  (* default to variable name *)
 
 (*
 ** Buffer processor
 *)
-
+ 
 
 let init ~(prog: string) : Lexing.lexbuf =
   H.clear keywords;
   Lexerhack.currentPattern := prog;
-  List.iter
+  List.iter 
     (fun (key, token) -> H.add keywords key token)
     [ ("const", CONST); ("__const", CONST); ("__const__", CONST);
       ("static", STATIC);
@@ -82,13 +82,13 @@ let init ~(prog: string) : Lexing.lexbuf =
       ("union", UNION);
       ("break", BREAK);
       ("continue", CONTINUE);
-      ("goto", GOTO);
+      ("goto", GOTO); 
       ("return", RETURN);
       ("switch", SWITCH);
-      ("case", CASE);
+      ("case", CASE); 
       ("default", DEFAULT);
-      ("while", WHILE);
-      ("do", DO);
+      ("while", WHILE);  
+      ("do", DO);  
       ("for", FOR);
       ("if", IF);
       ("else", ELSE);
@@ -98,12 +98,12 @@ let init ~(prog: string) : Lexing.lexbuf =
     ];
   E.startParsingFromString prog
 
-let finish () =
+let finish () = 
   E.finishParsing ()
 
 (*** Error handling ***)
 let error msg =
-  E.parse_error msg
+  E.parse_error msg 
 
 
 (*** escape character management ***)
@@ -141,12 +141,12 @@ let scan_oct_escape str =
        (String.make 1 (Char.chr (the_value mod 256)))
 
 (* ISO standard locale-specific function to convert a wide character
- * into a sequence of normal characters. Here we work on strings.
+ * into a sequence of normal characters. Here we work on strings. 
  * We convert L"Hi" to "H\000i\000" *)
 let wbtowc wstr =
-  let len = String.length wstr in
-  let dest = String.make (len * 2) '\000' in
-  for i = 0 to len-1 do
+  let len = String.length wstr in 
+  let dest = String.make (len * 2) '\000' in 
+  for i = 0 to len-1 do 
     dest.[i*2] <- wstr.[i] ;
   done ;
   dest
@@ -164,7 +164,7 @@ let wstr_to_warray wstr =
 let getArgName (l: Lexing.lexbuf) (prefixlen: int) =
   let lexeme = Lexing.lexeme l in
   let ll = String.length lexeme in
-  if  ll > prefixlen then
+  if  ll > prefixlen then 
     String.sub lexeme (prefixlen + 1) (ll - prefixlen - 1)
   else
     ""
@@ -190,11 +190,11 @@ let fraction  = '.' decdigit+
 let floatraw = (intnum? fraction)
 			|(intnum exponent)
 			|(intnum? fraction exponent)
-			|(intnum '.')
-                        |(intnum '.' exponent)
+			|(intnum '.') 
+                        |(intnum '.' exponent) 
 let floatnum = floatraw floatsuffix?
 
-let ident = (letter|'_')(letter|decdigit|'_')*
+let ident = (letter|'_')(letter|decdigit|'_')* 
 let attribident = (letter|'_')(letter|decdigit|'_'|':')
 let blank = [' ' '\t' '\012' '\r']
 let escape = '\\' _
@@ -207,7 +207,7 @@ let argname = ':' ident
 
 rule initial =
 	parse 	blank			{ initial lexbuf}
-|               "/*"			{ let _ = comment lexbuf in
+|               "/*"			{ let _ = comment lexbuf in 
                                           initial lexbuf}
 |               "//"                    { endline lexbuf }
 |               "\n"                    { E.newline (); initial lexbuf}
@@ -287,22 +287,22 @@ rule initial =
 |               "%S"  argname           {ARG_S  (getArgName lexbuf 2) }
 |               "%g"  argname           {ARG_g  (getArgName lexbuf 2) }
 |               "%A"  argname           {ARG_A  (getArgName lexbuf 2) }
-|               "%c"  argname           {ARG_c  (getArgName lexbuf 2) }
+|               "%c"  argname           {ARG_c  (getArgName lexbuf 2) } 
 
 |		'%'			{PERCENT}
 |		ident			{scan_ident (Lexing.lexeme lexbuf)}
 |		eof			{EOF}
-|		_			{E.parse_error
+|		_			{E.parse_error 
                                            "Formatlex: Invalid symbol"
                                         }
 
 and comment =
-    parse
+    parse 	
       "*/"			        { () }
 |     '\n'                              { E.newline (); comment lexbuf }
 | 		_ 			{ comment lexbuf }
 
 
-and endline = parse
+and endline = parse 
         '\n' 			{ E.newline (); initial lexbuf}
 |	_			{ endline lexbuf}

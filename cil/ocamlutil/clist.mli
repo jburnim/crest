@@ -1,11 +1,11 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -42,14 +42,14 @@
     the elements of the list in a special data structure. Routines are provided
     to convert to/from ordinary lists, and carry out common list operations.*)
 
-(** The clist datatype. A clist can be an ordinary list, or a clist preceded
+(** The clist datatype. A clist can be an ordinary list, or a clist preceded 
     or followed by an element, or two clists implicitly appended together*)
-type 'a clist =
-  | CList of 'a list             (** The only representation for the empty
+type 'a clist = 
+  | CList of 'a list             (** The only representation for the empty 
                                      list. Try to use sparingly.  *)
-  | CConsL of 'a * 'a clist      (** Do not use this a lot because scanning
+  | CConsL of 'a * 'a clist      (** Do not use this a lot because scanning 
                                    * it is not tail recursive *)
-  | CConsR of 'a clist * 'a
+  | CConsR of 'a clist * 'a 
   | CSeq of 'a clist * 'a clist (** We concatenate only two of them at this
                                     time. Neither is the empty clist. To be
                                     sure always use append to make these *)
@@ -58,28 +58,28 @@ type 'a clist =
 (** Convert a clist to an ordinary list *)
 val toList: 'a clist -> 'a list
 
-(** Convert an ordinary list to a clist *)
-val fromList: 'a list -> 'a clist
+(** Convert an ordinary list to a clist *)  
+val fromList: 'a list -> 'a clist 
 
 (** Create a clist containing one element *)
-val single: 'a -> 'a clist
+val single: 'a -> 'a clist        
 
 (** The empty clist *)
-val empty: 'a clist
+val empty: 'a clist               
 
 
 (** Append two clists *)
-val append: 'a clist -> 'a clist -> 'a clist
-
-(** A useful check to assert before an append. It checks that the two lists
+val append: 'a clist -> 'a clist -> 'a clist 
+                 
+(** A useful check to assert before an append. It checks that the two lists 
  * are not identically the same (Except if they are both empty) *)
 val checkBeforeAppend: 'a clist -> 'a clist -> bool
 
 (** Find the length of a clist *)
-val length: 'a clist -> int
+val length: 'a clist -> int   
 
 (** Map a function over a clist. Returns another clist *)
-val map: ('a -> 'b) -> 'a clist -> 'b clist
+val map: ('a -> 'b) -> 'a clist -> 'b clist 
 
 
 (** A version of fold_left that works on clists *)
@@ -92,5 +92,6 @@ val iter: ('a -> unit) -> 'a clist -> unit
 val rev: ('a -> 'a) -> 'a clist -> 'a clist
 
 (** A document for printing a clist (similar to [docList]) *)
-val docCList:
+val docCList: 
     Pretty.doc -> ('a -> Pretty.doc) -> unit -> 'a clist -> Pretty.doc
+ 

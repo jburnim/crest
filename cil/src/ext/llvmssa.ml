@@ -1,9 +1,9 @@
-(* Copyright (c) 2008 Intel Corporation
- * All rights reserved.
+(* Copyright (c) 2008 Intel Corporation 
+ * All rights reserved. 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  * 	Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  * 	Redistributions in binary form must reproduce the above copyright
@@ -12,7 +12,7 @@
  *     Neither the name of the Intel Corporation nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
@@ -55,19 +55,19 @@ let z = 3
 
 let z = 3
 
-let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (ssavars:varinfo list) : llvmBlock list =
+let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (ssavars:varinfo list) : llvmBlock list = 
   (* map from (b:string, v:string) -> llvmLocal
        giving the ssa variable to use for 'v' at entry to block labeled 'b' *)
   let entryName = H.create 32
 
   (* map from (b:string, v:string) -> llvmValue
-       giving the value to use for 'v' at exit from block labeled 'b'
+       giving the value to use for 'v' at exit from block labeled 'b' 
      note that the result is a value as 'v' may have been assigned a constant in 'b' *)
   and exitValue = H.create 32 in
 
   let id = ref 0 in
   (* create a new unique LLVM local for local variable 'vi' *)
-  let nextname (s:string) (t:typ) : llvmLocal =
+  let nextname (s:string) (t:typ) : llvmLocal = 
     id := !id + 1;
     (sprintf "%s.%d" s !id, t)
   in
@@ -77,25 +77,25 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
      rename all uses and subsequent assignments. Record the variable's
      new names at entry to 'b' and new values at exit from 'b' in
      entryName and exitValue *)
-  let renameVariables (vl:varinfo list) (b:llvmBlock) : unit =
+  let renameVariables (vl:varinfo list) (b:llvmBlock) : unit = 
     let blabel = b.lblabel in
 
     (* The entry value is a new variable for all blocks except the function entry
-       point. At entry, formals keep their name in the argument list, while
+       point. At entry, formals keep their name in the argument list, while 
        non-formals get C's 0 value for their type (maybe LUndef would be a better
        choice?) *)
-    let name1 vi =
+    let name1 vi = 
       if b.lbpreds <> [] then begin
 	let phiname = nextname vi.vname vi.vtype in
 	H.add entryName (b.lblabel, vi.vname) phiname;
 	LLocal phiname
-      end else if memq vi formals then
+      end else if memq vi formals then 
 	LLocal (vi.vname, vi.vtype)
       else
 	lzero vi.vtype
     in
 
-    (* Set initial variable values *)
+    (* Set initial variable values *) 
     iter (fun vi -> H.add exitValue (blabel, vi.vname) (name1 vi)) vl;
 
     (* Rename LLVM value 'lv' *)
@@ -118,9 +118,9 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
 	    H.replace exitValue (blabel, rv) (LLocal newname)
 	  end
       | _ -> ()
-
+	    
     (* Rename in terminator 'term' *)
-    and renameTerminator (term:llvmTerminator) : llvmTerminator =
+    and renameTerminator (term:llvmTerminator) : llvmTerminator = 
       match term with
       | TRet lv -> TRet (map renameValue lv)
       | TCond (lv, b1, b2) -> TCond (renameValue lv, b1, b2)
@@ -133,7 +133,7 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
   in
 
   (* Add the phi statement for 'vi' to the start of block 'b' *)
-  let addPhi (b:llvmBlock) (vi:varinfo) : unit=
+  let addPhi (b:llvmBlock) (vi:varinfo) : unit= 
     if b.lbpreds <> [] then
       let v = vi.vname in
       let args = map (fun pb -> LPhi (H.find exitValue (pb.lblabel, v), pb)) b.lbpreds in
@@ -146,7 +146,7 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
   let optimizeSsa (bl:llvmBlock list) : unit =
     (* A union-find hash table for tracking an SSA variable's current value *)
     let varmap = H.create 32 in
-    let rec remap v =
+    let rec remap v = 
       (*fprint ~width:80 stderr (dprintf "lookup %a\n" globals#printValue v);*)
       if H.mem varmap v then
 	let v' = H.find varmap v in
@@ -165,9 +165,9 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
        might be an LLVM value. *)
     let onepass () : bool =
       let change = ref false in
-      let oneins (i:llvmInstruction) : unit =
+      let oneins (i:llvmInstruction) : unit = 
 	if i.liop = LIphi && i.liargs <> [] then
-	  let rec checkRewrite (d:llvmValue) (phiargs:llvmValue list) =
+	  let rec checkRewrite (d:llvmValue) (phiargs:llvmValue list) = 
 	    match phiargs with
 	    | LPhi (v, _) :: phiargs' ->
 		let v' = remap v in
@@ -197,20 +197,20 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
     in
 
     (* After optimization, remap all variables to their final value *)
-    let doremap () =
+    let doremap () = 
       let rec remapval (v:llvmValue) : llvmValue = match v with
       | LLocal lv -> remap v
       | LPhi (v', b) -> LPhi (remapval v', b)
       | _ -> v
       in
-      let remapterm (t:llvmTerminator) : llvmTerminator =
+      let remapterm (t:llvmTerminator) : llvmTerminator = 
 	match t with
 	| TRet lv -> TRet (map remapval lv)
 	| TCond (lv, b1, b2) -> TCond (remapval lv, b1, b2)
 	| TSwitch (lv, db, cases) -> TSwitch (remapval lv, db, cases)
 	| _ -> t
       in
-      let remapins (i:llvmInstruction) : unit =
+      let remapins (i:llvmInstruction) : unit = 
 	i.liargs <- map remapval i.liargs
       in iter (fun b -> iter remapins b.lbbody; b.lbterminator <- remapterm b.lbterminator) bl
     in
@@ -219,9 +219,9 @@ let llvmSsa (globals:llvmGenerator) (bl:llvmBlock list) (formals:varinfo list) (
     doremap ()
   in
 
-  (* Remove the phi instructions killed by optimization, and the assignment
+  (* Remove the phi instructions killed by optimization, and the assignment 
      statements we created during initial code generation *)
-  let removeAssignAndDeadPhi (b:llvmBlock) : unit =
+  let removeAssignAndDeadPhi (b:llvmBlock) : unit = 
     let liveins i = not (i.liop = LIassign || i.liop = LIphi && i.liargs = []) in
     b.lbbody <- filter liveins b.lbbody
   in

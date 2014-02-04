@@ -1,9 +1,9 @@
 (*
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  John Kodumal        <jkodumal@eecs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -39,32 +39,32 @@ type 'a urefC =
   | Link of 'a uref
 and 'a uref = 'a urefC ref
 
-let rec find p =
+let rec find p = 
   match !p with
     | Ecr _ -> p
     | Link p' ->
-	let p'' = find p'
+	let p'' = find p' 
 	in p := Link p''; p''
 
 let uref x = ref (Ecr(x,0))
 
 let equal (p,p') = (find p == find p')
 
-let deref p =
-  match ! (find p) with
+let deref p = 
+  match ! (find p) with 
     | Ecr (x,_) -> x
     | _ -> raise Bad_find
 
-let update (p,x) =
-  let p' = find p
+let update (p,x) = 
+  let p' = find p 
   in
     match !p' with
       | Ecr (_,rank) -> p' := Ecr(x,rank)
       | _ -> raise Bad_find
-
-let unify f (p,q) =
+	  
+let unify f (p,q) = 
   let p',q' = find p, find q in
-    match (!p',!q') with
+    match (!p',!q') with 
       | (Ecr(px,pr),Ecr(qx,qr)) ->
 	let x () = f(px,qx) in
 	  if (p' == q') then
@@ -76,12 +76,12 @@ let unify f (p,q) =
 	  else (* pr > qr *)
             (q' := Link p'; p' := Ecr(x (),pr))
       | _ -> raise Bad_find
-
-let union (p,q) =
+	  
+let union (p,q) = 
   let p',q' = find p, find q in
-    match (!p',!q') with
+    match (!p',!q') with 
       | (Ecr(px,pr),Ecr(qx,qr)) ->
-	  if (p' == q') then
+	  if (p' == q') then 
 	    ()
 	  else if pr == qr then
 	    (q' := Ecr(qx, qr+1); p' := Link q')
@@ -90,3 +90,5 @@ let union (p,q) =
 	  else (* pr > qr *)
 	    q' := Link p'
       | _ -> raise Bad_find
+	  
+

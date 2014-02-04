@@ -1,11 +1,11 @@
-(*
+(* 
  *
- * Copyright (c) 2001-2002,
+ * Copyright (c) 2001-2002, 
  *  George C. Necula    <necula@cs.berkeley.edu>
  *  Scott McPeak        <smcpeak@cs.berkeley.edu>
  *  Wes Weimer          <weimer@cs.berkeley.edu>
  * All rights reserved.
- *
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
@@ -34,14 +34,14 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *)
-
+ 
     (* Checks the well-formedness of the file. Prints warnings and
      * returns false if errors are found *)
 
-type checkFlags =
-    NoCheckGlobalIds   (* Do not check that the global ids have the proper
-                        * hash value *)
-    | IgnoreInstructions of (Cil.instr -> bool)
+type checkFlags = 
+    NoCheckGlobalIds   (* Do not check that the global ids have the proper 
+                        * hash value *) 
+    | IgnoreInstructions of (Cil.instr -> bool) 
                        (** Ignore the specified instructions *)
-
+ 
 val checkFile: checkFlags list -> Cil.file -> bool
