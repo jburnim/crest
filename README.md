@@ -25,9 +25,12 @@ For simple, single-file programs, you can use the build script
 "bin/crestc" to instrument and compile your test program.
 
 CREST can be used to instrument multi-file programs, too --
-instructions will be added soon.  In the meantime, you can take a look
-at an example, instrumented form of grep-2.2, available at CREST's
-homepage.  Contact jburnim@cs.berkeley.edu for details.
+instructions may be added later.  In the meantime, you can take a look
+at an example, instrumented form of grep-2.2, available at
+https://github.com/jburnim/crest/tree/master/benchmarks/grep-2.2 .
+For further information, please see this
+[post](https://groups.google.com/forum/#!topic/crest-users/KwgP9JkajOw)
+on the CREST-users mailing list.
 
 
 Running Crest
