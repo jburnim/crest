@@ -1,34 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>CREST by jburnim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>CREST by jburnim</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
+    <header>
+      <div class="inner">
         <h1>CREST</h1>
-        <p>Concolic test generation tool for C</p>
+        <h2>Concolic test generation tool for C</h2>
+        <a href="https://github.com/jburnim/crest" class="button"><small>View project on</small>GitHub</a>
+      </div>
+    </header>
 
-        <p class="view"><a href="https://github.com/jburnim/crest">View the Project on GitHub <small>jburnim/crest</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/jburnim/crest/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/jburnim/crest/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/jburnim/crest">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <p>CREST is an automatic test generation tool for C.</p>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <p>CREST is an automatic test generation tool for C.</p>
 
 <p>CREST works by inserting instrumentation code (using <a href="http://cil.sourceforge.net">CIL</a>) into a target program to perform symbolic execution concurrently with the concrete execution.  The generated symbolic constraints are solved (using <a href="http://yices.csl.sri.com">Yices</a>) to generate input that drive the test execution down new, unexplored program paths.</p>
 
@@ -36,19 +36,31 @@
 
 <p>Further questions?  Please e-mail the CREST-users mailing list (CREST-users at googlegroups.com, searchable at <a href="https://groups.google.com/forum/#!forum/crest-users">https://groups.google.com/forum/#!forum/crest-users</a>).</p>
 
-<p>A <a href="http://jburnim.github.io/pubs/BurnimSen-ASE08.pdf">short paper</a> and <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-123.html">technical report</a> about the search strategies in CREST are available at the homepage of <a href="http://http://jburnim.github.io">Jacob Burnim</a>.</p>
+<p>A <a href="http://jburnim.github.io/pubs/BurnimSen-ASE08.pdf">short paper</a> and <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-123.html">technical report</a> about the search strategies in CREST are available at the homepage of <a href="http://jburnim.github.io">Jacob Burnim</a>.</p>
 
 <p><strong>News</strong>:  CREST 0.1.2 is now available.  It can be downloaded at <a href="https://github.com/jburnim/crest/releases/tag/v0.1.2">https://github.com/jburnim/crest/releases/tag/v0.1.2</a>.  This is a bug fix release -- several build issues are fixed, as well as a bug in instrumenting unary expressions.</p>
 
 <p><strong>News</strong>:  Heechul Yun has extended CREST to support non-linear arithmetic (using Z3).  For more information, see: <a href="https://github.com/heechul/crest-z3">https://github.com/heechul/crest-z3</a> and <a href="https://github.com/heechul/crest-z3/blob/master/README-z3">https://github.com/heechul/crest-z3/blob/master/README-z3</a>.</p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/jburnim">jburnim</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/jburnim/crest/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/jburnim/crest/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/jburnim/crest"></a> is maintained by <a href="https://github.com/jburnim">jburnim</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-              <script type="text/javascript">
+
+            <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
           </script>
