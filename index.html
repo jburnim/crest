@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>CREST by jburnim</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>CREST</h1>
+        <p>Concolic test generation tool for C</p>
+
+        <p class="view"><a href="https://github.com/jburnim/crest">View the Project on GitHub <small>jburnim/crest</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/jburnim/crest/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jburnim/crest/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/jburnim/crest">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <p>CREST is an automatic test generation tool for C.</p>
+
+<p>CREST works by inserting instrumentation code (using <a href="http://cil.sourceforge.net">CIL</a>) into a target program to perform symbolic execution concurrently with the concrete execution.  The generated symbolic constraints are solved (using <a href="http://yices.csl.sri.com">Yices</a>) to generate input that drive the test execution down new, unexplored program paths.</p>
+
+<p>CREST currently only reasons symbolically about linear, integer arithmetic.  CREST should be usable on any modern Linux or Mac OS X system.  For further building and usage information, see the <a href="https://github.com/jburnim/crest/blob/master/README.md">README</a> file.  You may also want to check out the <a href="http://jburnim.github.io/crest/FAQ">FAQ</a>.</p>
+
+<p>Further questions?  Please e-mail the CREST-users mailing list (CREST-users at googlegroups.com, searchable at <a href="https://groups.google.com/forum/#!forum/crest-users">https://groups.google.com/forum/#!forum/crest-users</a>).</p>
+
+<p>A <a href="http://jburnim.github.io/pubs/BurnimSen-ASE08.pdf">short paper</a> and <a href="http://www.eecs.berkeley.edu/Pubs/TechRpts/2008/EECS-2008-123.html">technical report</a> about the search strategies in CREST are available at the homepage of <a href="http://http://jburnim.github.io">Jacob Burnim</a>.</p>
+
+<p><strong>News</strong>:  CREST 0.1.2 is now available.  It can be downloaded at <a href="https://github.com/jburnim/crest/releases/tag/v0.1.2">https://github.com/jburnim/crest/releases/tag/v0.1.2</a>.  This is a bug fix release -- several build issues are fixed, as well as a bug in instrumenting unary expressions.</p>
+
+<p><strong>News</strong>:  Heechul Yun has extended CREST to support non-linear arithmetic (using Z3).  For more information, see: <a href="https://github.com/heechul/crest-z3">https://github.com/heechul/crest-z3</a> and <a href="https://github.com/heechul/crest-z3/blob/master/README-z3">https://github.com/heechul/crest-z3/blob/master/README-z3</a>.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/jburnim">jburnim</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-4470377-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
