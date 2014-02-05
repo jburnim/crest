@@ -8,6 +8,11 @@ Thanks for downloading and trying out CREST.
 You can get the latest version of CREST, as well as news and
 announcements at CREST's homepage: http://jburnim.github.io/crest
 
+If you want to cite CREST, please refer to the (short) paper: Burnim,
+Sen, "Heuristics for Dynamic Test Generation", Proceedings of the 23rd
+IEEE/ACM International Conference on Automated Software Engineering
+(ASE), 2008.
+
 
 Preparing a Program for CREST
 =====
