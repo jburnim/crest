@@ -13,6 +13,11 @@ Sen, "Heuristics for Dynamic Test Generation", Proceedings of the 23rd
 IEEE/ACM International Conference on Automated Software Engineering
 (ASE), 2008.
 
+NOTE: CREST is no longer being actively developed, but questions are
+still answered on the CREST-users mailing list --
+crest-users@googlegroups.com and
+https://groups.google.com/forum/#!forum/crest-users .
+
 
 Preparing a Program for CREST
 =====
@@ -74,10 +79,10 @@ produces "coverage", a list of the ID's of all covered branches.
 Setup
 =====
 
-CREST depends on Yices, an SMT solver tool and library available at
-http://yices.csl.sri.com/.  To build and run CREST, you must download
-and install Yices, and change YICES_DIR in src/Makefile to point to
-Yices location.
+CREST depends on Yices 1, an SMT solver tool and library available at
+http://yices.csl.sri.com/old/download-yices1.shtml.  To build and run
+CREST, you must download and install Yices *version 1* and change
+YICES_DIR in src/Makefile to point to Yices location.
 
 CREST uses CIL to instrument C programs for testing.  A modified
 distribution of CIL is included in directory cil/.  To build CIL,
