@@ -6,12 +6,15 @@ CREST is a concolic test generation tool for C.
 Thanks for downloading and trying out CREST.
 
 You can get the latest version of CREST, as well as news and
-announcements at CREST's homepage: http://jburnim.github.io/crest
+announcements at CREST's homepage: https://burn.im/crest .
 
 If you want to cite CREST, please refer to the (short) paper: Burnim,
 Sen, "Heuristics for Dynamic Test Generation", Proceedings of the 23rd
 IEEE/ACM International Conference on Automated Software Engineering
 (ASE), 2008.
+
+You can find a list of papers using CREST at
+https://www.burn.im/crest/#publications .
 
 NOTE: CREST is no longer being actively developed, but questions are
 still answered on the CREST-users mailing list --
