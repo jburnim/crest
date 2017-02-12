@@ -140,16 +140,21 @@ bool YicesSolver::Solve(const map<var_t,type_t>& vars,
   // fprintf(stderr, "yices_mk_num(ctx, 0)\n");
   yices_expr zero = yices_mk_num(ctx, 0);
   assert(zero);
+  char numBuff[32];
 
   { // Constraints.
     vector<yices_expr> terms;
     for (PredIt i = constraints.begin(); i != constraints.end(); ++i) {
       const SymbolicExpr& se = (*i)->expr();
       terms.clear();
-      terms.push_back(yices_mk_num(ctx, se.const_term()));
+      snprintf(numBuff, sizeof(numBuff), "%lld",se.const_term());
+      terms.push_back(yices_mk_num_from_string(ctx,numBuff));
+      //terms.push_back(yices_mk_num(ctx, se.const_term()));
       for (SymbolicExpr::TermIt j = se.terms().begin(); j != se.terms().end(); ++j) {
-	yices_expr prod[2] = { x_expr[j->first], yices_mk_num(ctx, j->second) };
-	terms.push_back(yices_mk_mul(ctx, prod, 2));
+        snprintf(numBuff, sizeof(numBuff), "%lld",j->second);
+        yices_expr prod[2] = { x_expr[j->first], yices_mk_num_from_string(ctx, numBuff) };
+        //yices_expr prod[2] = { x_expr[j->first], yices_mk_num(ctx, j->second) };
+        terms.push_back(yices_mk_mul(ctx, prod, 2));
       }
       yices_expr e = yices_mk_sum(ctx, &terms.front(), terms.size());
 
