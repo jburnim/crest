@@ -14,7 +14,7 @@ IEEE/ACM International Conference on Automated Software Engineering
 (ASE), 2008.
 
 You can find a list of papers using CREST at
-https://www.burn.im/crest/#publications .
+https://burn.im/crest/#publications .
 
 NOTE: CREST is no longer being actively developed, but questions are
 still answered on the CREST-users mailing list --
