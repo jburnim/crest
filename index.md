@@ -16,8 +16,8 @@ A [short paper](http://jburnim.github.io/pubs/BurnimSen-ASE08.pdf) and [technica
 ## Publications
 
 Many research groups have built on top of CREST.  If you would like your paper added to the list below, please contact [jburnim@gmail.com](mailto:jburnim@gmail.com).
- 
-  1. _Analysis and Detection of SQL Injection Vulnerabilities via Automatic Test Case Generation of Programs_  
+
+ 1. _Analysis and Detection of SQL Injection Vulnerabilities via Automatic Test Case Generation of Programs_  
     M Ruse, T Sarkar, S Basu  
     IEEE/IPSJ International Symposium on Applications and the Internet (**SAINT**), 2010
 
@@ -109,6 +109,10 @@ Many research groups have built on top of CREST.  If you would like your paper a
     Hyunmin Seo, Sunghun Kim  
     ACM SIGSOFT International Symposium on the Foundations of Software Engineering (**FSE**), 2014
 
+ 1. _SMCDCT: A Framework for Automated MC/DC Test Case Generation Using Distributed Concolic Testing_
+    Sangharatna Godboley, Subhrakanta Panda, Durga Prasad Mohapatra
+    International Conference on Distributed Computing and Internet Technology (**ICDCIT**), 2015
+
  1. _PBCOV: a property-based coverage criterion_  
     Kassem Fawaz, Fadi Zaraket, Wes Masri, Hamza Harkous  
     Software Quality Journal, March 2015
@@ -131,7 +135,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
 
  1. _CLORIFI: software vulnerability discovery using code clone verification_  
     Hongzhe Li, Hyuckmin Kwon, Jonghoon Kwon, Heejo Lee  
-    Concurrency and Computation: Practice and Experience, 2016
+    Concurrency and Computation: Practice and Experience, April 2016
 
  1. _PAC learning-based verification and model synthesis_  
     Yu-Fang Chen, Chiao Hsieh, Ondřej Lengál, Tsung-Ju Lii, Ming-Hsien Tsai, Bow-Yaw Wang, Bow-Yaw Wang  
@@ -140,3 +144,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
  1. _Design of a Modified Concolic Testing Algorithm with Smaller Constraints_  
     Yavuz Koroglu, Alper Sen  
     International Workshop on Constraints in Software Testing, Verification and Analysis (**CSTVA**), 2016
+
+ 1. _An improved distributed concolic testing approach_
+    Sangharatna Godboley, Durga Prasad Mohapatra, Avijit Das, Rajib Mall
+    Software: Practice and Experience, February 2017
