@@ -17,6 +17,10 @@ A [short paper](http://jburnim.github.io/pubs/BurnimSen-ASE08.pdf) and [technica
 
 Many research groups have built on top of CREST.  If you would like your paper added to the list below, please contact [jburnim@gmail.com](mailto:jburnim@gmail.com).
 
+ 1. _Oasis: Concolic Execution Driven by Test Suites and Code Modifications_  
+    Olivier Crameri, Rekha Bachwani, Tim Brecht, Ricardo Bianchini, Dejan Kostic, Willy Zwaenepoel  
+    École Polytechnique Fédérale de Lausanne (EPFL), Technical report LABOS-REPORT-2009-002, 2009
+
  1. _Analysis and Detection of SQL Injection Vulnerabilities via Automatic Test Case Generation of Programs_  
     M Ruse, T Sarkar, S Basu  
     IEEE/IPSJ International Symposium on Applications and the Internet (**SAINT**), 2010
@@ -34,7 +38,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
     ACM EuroSys Conference on Computer Systems (**EuroSys**), 2011
 
  1. _Toward Online Testing of Federated and Heterogeneous Distributed Systems_  
-    Marco Canini, Vojin Jovanovic, Daniele Venzano, Boris Spasojevic, Olivier Crameri, and Dejan Kostic  
+    Marco Canini, Vojin Jovanovic, Daniele Venzano, Boris Spasojevic, Olivier Crameri, Dejan Kostic  
     USENIX Annual Technical Conference (**ATC**), 2011
 
  1. _Online testing of federated and heterogeneous distributed systems_  
@@ -145,6 +149,22 @@ Many research groups have built on top of CREST.  If you would like your paper a
     Yavuz Koroglu, Alper Sen  
     International Workshop on Constraints in Software Testing, Verification and Analysis (**CSTVA**), 2016
 
- 1. _An improved distributed concolic testing approach_
-    Sangharatna Godboley, Durga Prasad Mohapatra, Avijit Das, Rajib Mall
+ 1. _An improved distributed concolic testing approach_  
+    Sangharatna Godboley, Durga Prasad Mohapatra, Avijit Das, Rajib Mall  
     Software: Practice and Experience, February 2017
+
+ 1. _Locating Software Faults Based on Minimum Debugging Frontier Set_  
+    Feng Li, Zhiyuan Li, Wei Huo, Xiaobing Feng  
+    IEEE Transactions on Software Engineering, August 2017
+
+ 1. COMPI: Concolic Testing for MPI Applications  
+    Hongbo Li, Sihuan Li, Zachary Benavides, Zizhong Chen, Rajiv Gupta  
+    IEEE International Parallel and Distributed Processing Symposium (**IPDPS**), 2018.
+
+ 1. Reducer-Based Construction of Conditional Verifiers  
+    Dirk Beyer, Marie-Christine Jakobs, Thomas Lemberger, Heike Wehrheim  
+    ACM/IEEE International Conference on Software Engineering (**ICSE**), 2018
+
+ 1. Automatically Generating Search Heuristics for Concolic Testing  
+    Sooyoung Cha, Seongjoon Hong, Junhee Lee, Hakjoo Oh  
+    ACM/IEEE International Conference on Software Engineering (**ICSE**), 2018
