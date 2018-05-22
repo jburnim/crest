@@ -157,6 +157,10 @@ Many research groups have built on top of CREST.  If you would like your paper a
     Feng Li, Zhiyuan Li, Wei Huo, Xiaobing Feng  
     IEEE Transactions on Software Engineering, August 2017
 
+ 1. Invasive Software Testing: Mutating Target Programs to Diversify Test Exploration for High Test Coverage  
+    Yunho Kim, Shin Hong, Bongseok Ko, Duy Loc Phan and Moonzoo Kim  
+    IEEE International Conference on Software Testing, Validation and Verification (**ICST**), 2018
+
  1. COMPI: Concolic Testing for MPI Applications  
     Hongbo Li, Sihuan Li, Zachary Benavides, Zizhong Chen, Rajiv Gupta  
     IEEE International Parallel and Distributed Processing Symposium (**IPDPS**), 2018.
