@@ -74,7 +74,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
     ACM/IEEE International Conference on Software Engineering (**ICSE**), 2012
 
  1. _Dynamic Symbolic Execution Guided by Data Dependency Analysis for High Structural Coverage_  
-    TheAnh Do, A.C.M. Fong, Russel Pears,
+    TheAnh Do, A.C.M. Fong, Russel Pears  
     International Conference on Evaluation of Novel Approaches to Software Engineering (**ENASE**), 2012
 
  1. _Using Concolic Testing to Refine Vulnerability Profiles in FUZZBUSTER_  
@@ -113,8 +113,8 @@ Many research groups have built on top of CREST.  If you would like your paper a
     Hyunmin Seo, Sunghun Kim  
     ACM SIGSOFT International Symposium on the Foundations of Software Engineering (**FSE**), 2014
 
- 1. _SMCDCT: A Framework for Automated MC/DC Test Case Generation Using Distributed Concolic Testing_
-    Sangharatna Godboley, Subhrakanta Panda, Durga Prasad Mohapatra
+ 1. _SMCDCT: A Framework for Automated MC/DC Test Case Generation Using Distributed Concolic Testing_  
+    Sangharatna Godboley, Subhrakanta Panda, Durga Prasad Mohapatra  
     International Conference on Distributed Computing and Internet Technology (**ICDCIT**), 2015
 
  1. _PBCOV: a property-based coverage criterion_  
@@ -134,7 +134,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
     ACM SIGSOFT International Symposium on Software Testing and Analysis (**ISSTA**), 2015
 
  1. _Abstraction-driven Concolic Testing_  
-    Przemysław Daca, Ashutosh Gupta, Thomas A. Henzinger
+    Przemysław Daca, Ashutosh Gupta, Thomas A. Henzinger  
     International Conference on Verification, Model Checking, and Abstract Interpretation (**VMCAI**), 2016
 
  1. _CLORIFI: software vulnerability discovery using code clone verification_  
