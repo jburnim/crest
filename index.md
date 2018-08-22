@@ -172,3 +172,7 @@ Many research groups have built on top of CREST.  If you would like your paper a
  1. Automatically Generating Search Heuristics for Concolic Testing  
     Sooyoung Cha, Seongjoon Hong, Junhee Lee, Hakjoo Oh  
     ACM/IEEE International Conference on Software Engineering (**ICSE**), 2018
+
+ 1. Template-Guided Concolic Testing via Online Learning  
+    Sooyoung Cha, Seonho Lee, Hakjoo Oh  
+    ACM/IEEE International Conference on Automated Software Engineering (**ASE**), 2018
