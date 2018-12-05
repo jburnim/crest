@@ -2,7 +2,7 @@
 YICES_DIR=/home/jburnim/yices-1.0.11
 
 CC=$(CXX)
-CFLAGS = -I. -I$(YICES_DIR)/include -Wall -O2
+CFLAGS = -I. -I$(YICES_DIR)/include -Wall -O2 -std=gnu++98
 CXXFLAGS = $(CFLAGS)
 LDFLAGS = -L$(YICES_DIR)/lib
 LOADLIBES = -lyices
