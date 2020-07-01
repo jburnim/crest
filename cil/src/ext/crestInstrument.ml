@@ -11,6 +11,8 @@
 
 open Cil
 
+open Pretty
+
 (*
  * Utilities that should be in the O'Caml standard libraries.
  *)
@@ -70,8 +72,8 @@ let curBranches = ref []
 let getNewId () = ((idCount := !idCount + 1); !idCount)
 let addBranchPair bp = (curBranches := bp :: !curBranches)
 let addFunction () = (branches := (!funCount, !curBranches) :: !branches;
-		      curBranches := [];
-		      funCount := !funCount + 1)
+          curBranches := [];
+          funCount := !funCount + 1)
 
 let readCounter fname =
   try
@@ -372,6 +374,7 @@ class crestInstrumentVisitor f =
             (instrumentExpr e1) @ [mkApply1 op e]
 
         | BinOp (op, e1, e2, _) ->
+            Printf.printf "Binary Operation Found!\n";
             (* Should skip this if we don't currently handle 'op'. *)
             (instrumentExpr e1) @ (instrumentExpr e2) @ [mkApply2 op e]
 
@@ -395,12 +398,13 @@ object (self)
   method vstmt(s) =
     match s.skind with
       | If (e, b1, b2, _) ->
+          Printf.printf "Branch Expression Found!\n";
           let getFirstStmtId blk = (List.hd blk.bstmts).sid in
           let b1_sid = getFirstStmtId b1 in
           let b2_sid = getFirstStmtId b2 in
-	    (self#queueInstr (instrumentExpr e) ;
-	     prependToBlock [mkBranch b1_sid 1] b1 ;
-	     prependToBlock [mkBranch b2_sid 0] b2 ;
+      (self#queueInstr (instrumentExpr e) ;
+       prependToBlock [mkBranch b1_sid 1] b1 ;
+       prependToBlock [mkBranch b2_sid 0] b2 ;
              addBranchPair (b1_sid, b2_sid)) ;
             DoChildren
 
@@ -521,7 +525,7 @@ let feature : featureDescr =
            * defined in this file. *)
           handleCallEdgesAndWriteCfg f ;
           (* Finally instrument the program. *)
-	  (let instVisitor = new crestInstrumentVisitor f in
+    (let instVisitor = new crestInstrumentVisitor f in
              visitCilFileSameGlobals (instVisitor :> cilVisitor) f) ;
           (* Add a function to initialize the instrumentation library. *)
           addCrestInitializer f ;
