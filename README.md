@@ -21,6 +21,23 @@ still answered on the CREST-users mailing list --
 crest-users@googlegroups.com and
 https://groups.google.com/forum/#!forum/crest-users .
 
+Preparing CIL
+=====
+Go to crest/cil diretory. You mush have OCaml and OCamlbuild installed properly. Then execute following commands:
+
+$ ./configure
+
+$ make
+
+Remember that, every time you make changes to CIL, you need to execute 'make' command to reflect the changes.
+
+Initial  Setup for CREST
+=====
+First, you need to setup Yices SMT Solver. PLease install version 1.0 from https://yices.csl.sri.com/old/download-yices1.html. For installation guideline follow https://yices.csl.sri.com/.
+
+Then you need to change the location of Yices in crest/src/makefile
+
+Now, go to crest/src directory and execute 'make' command. CREST is ready to use.
 
 Preparing a Program for CREST
 =====
