@@ -409,7 +409,7 @@ object (self)
           let getFirstStmtId blk = (List.hd blk.bstmts).sid in
           let b1_sid = getFirstStmtId b1 in
           let b2_sid = getFirstStmtId b2 in
-          stmts:= !stmts@[(e,s.sid,b1_sid,b2_sid)];
+          stmts:= !stmts@[(e,s.sid,b1_sid,b2_sid,!funCount)];
       (self#queueInstr (instrumentExpr e) ;
        prependToBlock [mkBranch b1_sid 1] b1 ;
        prependToBlock [mkBranch b2_sid 0] b2 ;
@@ -498,12 +498,12 @@ let prepareGlobalForCFG glob =
 let writeStmts () =
     let rec writeToFile f ls =
         match ls with
-        ((e,s,b1,b2)::tl)-> Pretty.fprintf f "%a, %d, %d, %d\n" d_exp e s b1 b2;
+        ((e,s,b1,b2,fc)::tl)-> Pretty.fprintf f "%a, %d, %d, %d, %d\n" d_exp e s b1 b2 fc;
                   writeToFile f tl
         | _ -> ()
     in
     let f = open_out "branch_statements" in
-    Pretty.fprintf f "Expression, Statement ID, Branch1 Statement ID, Branch2 Statement ID\n";
+    Pretty.fprintf f "Expression, Statement ID, Branch1 Statement ID, Branch2 Statement ID, Function Count (ID)\n";
     writeToFile f !stmts;
     close_out f
 
