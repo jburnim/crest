@@ -13,10 +13,11 @@ open Cil
 
 open Pretty
 
+(*open Errormsg*)
+
 (*
  * Utilities that should be in the O'Caml standard libraries.
  *)
-
 let isSome o =
   match o with
     | Some _ -> true
@@ -61,6 +62,8 @@ let open_append fname =
  * between CIL executions.  (These last two bits of state are
  * write-only -- at the end of each run we just append updates.)
  *)
+
+let stmts = ref []
 
 let idCount = ref 0
 let stmtCount = Cfg.start_id
@@ -396,9 +399,14 @@ object (self)
    * Instrument a statement (branch or function return).
    *)
   method vstmt(s) =
+    (*let d_string (fmt: ('a,unit,doc,string) format4) : 'a =
+            let f (d: doc) : string =
+                    Pretty.sprint 200 d*)
+
     match s.skind with
       | If (e, b1, b2, _) ->
-          Printf.printf "Branch Expression Found!\n";
+          stmts:= !stmts@[e];
+          Printf.printf "Branch Expression Found! %d\n" (List.length !stmts);
           let getFirstStmtId blk = (List.hd blk.bstmts).sid in
           let b1_sid = getFirstStmtId b1 in
           let b2_sid = getFirstStmtId b2 in
@@ -487,6 +495,16 @@ let prepareGlobalForCFG glob =
     GFun(func, _) -> prepareCFG func
   | _ -> ()
 
+let writeStmts () =
+    let rec writeToFile f ls =
+        match ls with
+        (h::tl)-> Pretty.fprintf f "%a\n" d_exp h ;
+                  writeToFile f tl
+        | _ -> ()
+    in
+    let f = open_append "branch_statements" in
+    writeToFile f !stmts;
+    close_out f
 
 let feature : featureDescr =
   { fd_name = "CrestInstrument";
@@ -533,5 +551,8 @@ let feature : featureDescr =
           writeIdCount () ;
           writeStmtCount () ;
           writeFunCount () ;
-          writeBranches ());
+          writeBranches ();
+          writeStmts ());
   }
+
+
