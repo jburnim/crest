@@ -502,7 +502,7 @@ let writeStmts () =
                   writeToFile f tl
         | _ -> ()
     in
-    let f = open_append "branch_statements" in
+    let f = open_out "branch_statements" in
     writeToFile f !stmts;
     close_out f
 
